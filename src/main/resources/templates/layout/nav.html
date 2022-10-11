@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Nav Layer -->
+<th:block th:fragment="lowerHeader">
+  <nav id="gnb">
+    <div class="content content-g">
+      <ul class="gnb-menu">
+        <li class="gnb-menu__item">
+          <a href="event_inf.html" th:href="@{/post/list?category=B0101}" class="title">공연
+          </a>
+        </li>
+        <li class="gnb-menu__item">
+          <a href="review.html" th:href="@{/post/list?category=B0103}" class="title">후기</a>
+        </li>
+        <li class="gnb-menu__item">
+          <a href="promotion.html" th:href="@{/post/list?category=B0102}" class="title">홍보</a>
+        </li>
+        <li class="gnb-menu__item">
+          <a th:href="@{/map}" class="title">문화지도</a>
+        </li>
+        <li class="gnb-menu__item">
+          <a th:href="@{/members/{email}/info(email=${s_email})}" class="title" type="">내정보</a>
+        </li>
+      </ul>
+
+      <div class="gnb-search">
+<!--        <form action="">-->
+          <input class="search__input" type="text" placeholder="검색">
+          <button style="border: 2px;"><i class="fas fa-search" id="searchAllBtn"></i></button>
+<!--        </form>-->
+
+      </div>
+
+    </div>
+
+    </div>
+  </nav>
+</th:block>
+
+
+
+<!-- MyInfo Menu Layer -->
+<th:block th:fragment="infoMenu">
+  <div class="tab__state">
+    <ul class="info__side">
+      <li class="info__side_menu">
+        <i class="fa-solid fa-user"></i>
+        <a class="" th:href="@{/members/{email}/info(email=${s_email})}">내 정보</a>
+      </li>
+      <li class="info__side_menu">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <a class="" th:href="@{/members/pwCheck}">내 정보 수정</a>
+      </li>
+      <li class="info__side_menu">
+        <i class="fa-solid fa-list"></i>
+        <span id="toc-toggle" onclick="openCloseToc()">
+                      활동내역
+                      <img th:src="@{/img/arrow_down.png}" id="arrow">
+                  </span>
+        <ul class="dropmenu" id="toc-content" style="display: none;">
+          <li><a th:href="@{/history/{email}/post(email=${s_email})}">내가 쓴 글</a></li>
+          <li><a th:href="@{/history/{email}/comment(email=${s_email})}">내가 쓴 댓글</a></li>
+<!--          <li><a th:href="@{/history/{email}/list(email=${s_email})}">좋아요 목록</a></li>-->
+        </ul>
+      </li>
+
+    </ul>
+  </div>
+</th:block>
+</html>

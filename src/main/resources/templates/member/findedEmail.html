@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{::link},                        <!--/* style */-->
+        ~{::script},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>울산한마당 | 아이디 찾기</title>
+  <link rel="stylesheet" href="../../static/css/member/findedEmail.css" th:href="@{/css/member/findedEmail.css}">
+
+
+</head>
+
+<body>
+<div id="wrapper">
+  <div class="upperHeader">
+    <th:block th:replace="~{layout/upperHeader::beforeUpperHeader}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::lowerHeader}"></th:block>
+  </div>
+
+  <!-- ======================================================================================================            -->
+  <main id="findedEmailMain">
+    <div class="container">
+      <!-- <div class="info__title">
+        <h2 id="title">아이디 찾기</h2>
+      </div> -->
+
+
+<!--이미지 안내 배너-->
+<div class="image_banner">
+  <div class="image_banner_in_box" style="width: 100%;">
+    <h3 style="font-weight: bold;">아이디 찾기</h3>
+  </div>
+</div>
+
+
+
+
+      <div class="center__container">
+        <div class="container__div">
+          <div class="common findedEmail__box">
+            <form action="" class="box" th:method="post">            
+            <h6> 고객님의 정보와 일치하는 아이디 목록입니다. </h6>            
+        
+            <div class="findedEmail__Email_box">
+              <ul>
+                <li>
+                  <input type="radio" name="email">
+                  <p> test1@test.com </p>
+                  <p> 가입: 2021.10.09</p>
+                </li>
+              </ul>
+            </div>
+                <div class="findedEmail__btn">
+                <button id="logInBtn">로그인</button>
+                <button id="findPwBtn">비밀번호 찾기</button>
+              </div>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- ======================================================================================================            -->
+</div>
+
+
+  <script>
+    findEmailBtn.addEventListener('click', findByEmail);
+
+    function findByEmail(e){
+      // AJAX 객체생성
+      const xhr = new XMLHttpRequest();
+
+      //클라이언트 요청
+      xhr.open('PUT','/api/members/email/find');
+      xhr.send(nickname.value);
+
+      //서버 응답처리
+      xhr.addEventListener('load',e=>{
+        //console.log(xhr);
+        if(xhr.status === 200){
+          //console.log(xhr.response); //json포맷의 문자열 수신확인
+          const obj = JSON.parse(xhr.response);//json포맷의 문자열 => js객체변환
+          if(obj.rtcd === '00'){
+            findedEmail.textContent = obj.data;
+          }else{
+            findedEmail.textContent = obj.data;
+          }
+        }else{
+          console.err('Error', xhr.status, xhr.statusText);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

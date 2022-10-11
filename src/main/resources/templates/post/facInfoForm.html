@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+  <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+  <meta name="author" content="KH java 할수있조">
+  <title>공연장 정보</title>
+  <!--  <link rel="stylesheet" href="" th:href="@{/css/bbs/detailForm.css}">-->
+  <!--  <script defer th:src="@{/js/common/ckeditor.js}"></script>-->
+  <script defer src="" th:src="@{/js/post/detailForm.js}"></script>
+</head>
+<body>
+<div class="wrapper">
+  <div class="upperHeader">
+    <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::nav}"></th:block>
+  </div>
+
+
+  <!-- =============================================         -->
+  <div class="main">
+    <main id="myInfoMain">
+      <!--  내정보 code      -->
+
+
+
+      <div class="post-wrap" th:data-code="${category}">
+        <div class="post-title"><h3>상세정보</h3></div>
+        <div class="class-body_detail">
+          <form action="" method="post" th:object="${info}">
+            <div class="card">
+              <div class="card-body">
+            <div class="post-content_detail">
+              <div><lable>공연장 : </lable><span name="" id="" th:text="|*{fcltynm}|"></span></div>
+              <div><lable>특성 : </lable><span th:text="|*{fcltychartr} |"></span></div>
+              <div><lable>객석수 : </lable><span th:text="|*{seatscale} |"></span></div>
+              <div><lable>전화번호 : </lable><span th:text="|*{telno} |"></span></div>
+              <div><lable>홈페이지 : </lable>
+                <a href="" th:href="*{relateurl}" target="_blank"><span th:text="*{relateurl}"></span></a></div>
+              <div><lable>주소 : </lable><span th:text="|*{adres} |"></span></div>
+              <div><lable>개관 : </lable><span th:text="|*{opende} |"></span></div>
+              <div><lable>위도 : </lable><span th:text="|*{la} |"></span></div>
+              <div><lable>경도 : </lable><span th:text="|*{lo} |"></span></div>
+            </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+        </div>
+
+      </div>
+    </main>
+    <!--  main을 세분화하려면 상단 리스트에 추가하고 작성    -->
+  </div>
+  <!--end main -->
+
+
+</div>
+</body>
+</html>

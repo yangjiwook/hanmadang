@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{::style},                        <!--/* style */-->
+        ~{::script},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+  <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+  <meta name="author" content="KH java 할수있조">
+  <title>공연상세</title>
+
+
+  <script defer src="" th:src="@{/js/post/detailForm.js}"></script>
+
+  <style>
+    .click_on{
+      display: block;
+    }
+    .click_off{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="upperHeader">
+    <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::nav}"></th:block>
+  </div>
+
+
+  <!-- =============================================         -->
+  <div class="main">
+    <main id="myInfoMain">
+      <!--  내정보 code      -->
+      <div class="post-wrap" th:data-code="${category}">
+        <div class="post-title"><h3>상세정보</h3></div>
+        <div class="class-body">
+          <form action="" method="post" th:object="${event}">
+            <input type="hidden" th:field="*{eventId}">
+            <div class="post-content">
+              <div class="card">
+                <div class="card-header">
+                  <div><lable><p class="in_contents-category" th:text="${event.genrenm}"></p> </lable><span name="" id="" th:text="|*{prfnm}|"></span></div>
+                </div>
+                <div class="card-body">
+                  <div class="info_in_box">
+                    <div class="info_in_box_img">
+                      <img width="180px" src="http://localhost:9080/attach/img/P0102/82335ef9-18d7-4509-b3d4-df57d8d50a48.jpg"
+                           th:if="*{poster}" th:src="*{poster}"
+                           alt="이미지를 불러올수 없습니다">
+                    </div>
+                    <div class="info_in_box_info">
+                      <div><lable>일시 : </lable><span th:text="|*{prfpdfrom} ~ *{prfpdto} |"></span></div>
+                      <div style ="color: var(--color-sub);"><lable>공연장 : </lable>
+                        <a href="" th:href="@{/post/fac/{id}(id=${event.mt10id})}"><span th:text="|*{fcltynm} |"></span></a></div>
+                      <div><lable>출연진 : </lable><span th:text="|*{prfcast} |"></span></div>
+                      <div><lable>제작 : </lable><span th:text="|*{prfcrew} |"></span></div>
+                      <div><lable>런타임 : </lable><span th:text="|*{prfruntime} |"></span></div>
+                      <div><lable>연령 : </lable><span th:text="|*{prfage} |"></span></div>
+                      <div><lable>제작 : </lable><span th:text="|*{entrpsnm} |"></span></div>
+                      <div><lable>티켓가격 : </lable><span th:text="|*{pcseguidance} |"></span></div>
+                      <div><lable>장르 : </lable><span th:text="|*{genrenm} |"></span></div>
+                      <div><lable>공연상태 : </lable><span th:text="|*{prfstate} |"></span></div>
+                      <div><lable>공연시간 : </lable><span th:text="|*{dtguidance} |"></span></div>
+                      <!--                <div><textarea name="" id="" rows="10" class="w100" th:field="*{bcontent}" th:readonly="readonly"></textarea></div>-->
+                    </div>
+                  </div>
+
+                  <div id="contents__toolbar1">
+                    <div class="toolbar-menu1">
+                      <ul class="toolbar-menu__contents1">
+                        <li class="toolbar-menu__item1">
+                          <p>
+                            <a id="introduce" class="item">
+                              소개
+                            </a>
+                          </p>
+                        </li>
+                        <li class="toolbar-menu__item1">
+                          <p>
+                            <a id="place" class="item">
+                              공연장
+                            </a>
+                          </p>
+                        </li>
+                        <li class="toolbar-menu__item1">
+                          <p>
+                            <a id="comment" class="item">
+                              한줄평
+                            </a>
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!--   소개 장소 한줄평     -->
+
+                  <!--  소개  -->
+                  <div id="intro_list" class="info_in_box_sty " >
+                    <div><p th:utext="*{sty}"></p>
+                      <img src="http://www.ulsanculture.kr/data/upload/exhibit/6/67/ee1a01b6340e5f12d0d1cc7ae3a6bc2d.jpg" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mapbox">
+              <div class="card vw-100">
+                <div class="card-body">
+                  <!--  장소  -->
+                  <h5 style="padding:1%; font-weight: bold;">
+                    <div class="info_map_title">
+                      <i class="fa-solid fa-location-dot"></i> 공연장 위치</div></h5>
+                  <div class="mini_map_info">
+                    <div><lable>공연장 : </lable><span name="" id="" th:text="|*{fcltynm}|"></span></div>
+                  </div>
+                  <div id="place_list" class="info_in_box_sty ">
+                    <div id="map" style="width: 100%; height: 500px; position: relative; overflow: hidden; outline: 1px solid rgba(187, 187, 187, 0.521);"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="textbox1">
+              <div class="card vw-100">
+                <h5 class="card-header">
+                  <div class="info_comment_title">
+                    <i class="fa-solid fa-star"></i>
+                    한줄평</div></h5>
+
+                <!--  한줄평  -->
+                <div class="card-body" id="comments_list">
+                  <ul>
+                    <li>재미있는 작품!</li>
+                    <li>좋았어요!</li>
+                    <br>
+                  </ul>
+                  <div class="textbox2">
+                    <div class="card w-100">
+                      <div class="card-body">
+                        <textarea class="form-control" row="1" ></textarea></div>
+                      <div class="card-footer"><button type="button" class="btn btn-warning btn-sm">등록</button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+        <br>
+        <div class="post-btngrp" >
+          <!--                <button type="button" id="replyBtn">답글</button>-->
+          <!--글작성자와 세션아이디체크해서 동이한경우만 수행-->
+          <!--                <th:block th:if="*{email} eq ${s_email}">-->
+          <!--                  <button type="button" id="editBtn">수정</button>-->
+          <!--                  <button type="button" id="delBtn">삭제</button>-->
+          <!--                </th:block>-->
+          <!-------------------------------------------->
+          <button type="button" class="btn btn-secondary btn-sm" id="listBtn">목록</button>
+          <div style="flex:2;">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button class="btn btn-primary me-md-2" type="button"><<<</button>
+              <button class="btn btn-primary" type="button">>>></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!--  main을 세분화하려면 상단 리스트에 추가하고 작성    -->
+</div>
+<!--end main -->
+
+<script th:inline="javascript">
+
+  const $introduce = document.getElementById('introduce');
+  const $place = document.getElementById('place');
+  const $comment = document.getElementById('comment');
+
+  const $intro_list = document.getElementById('intro_list');
+  const $place_list = document.getElementById('place_list');
+  const $comments_list = document.getElementById('comments_list');
+
+
+  $introduce.addEventListener('click', e=>{
+    $intro_list.classList.add('click_on');
+    $intro_list.classList.remove('click_off');
+
+    $place_list.classList.add('click_off');
+    $place_list.classList.remove('click_on');
+
+    $comments_list.classList.add('click_off');
+    $comments_list.classList.remove('click_on');
+  });
+
+  $place.addEventListener('click', e=>{
+    $intro_list.classList.add('click_off');
+    $intro_list.classList.remove('click_on');
+
+    $place_list.classList.add('click_on');
+    $place_list.classList.remove('click_off');
+
+    $comments_list.classList.add('click_off');
+    $comments_list.classList.remove('click_on');
+  });
+
+  $comment.addEventListener('click', e=>{
+    $intro_list.classList.add('click_off');
+    $intro_list.classList.remove('click_on');
+
+    $place_list.classList.add('click_off');
+    $place_list.classList.remove('click_on');
+
+    $comments_list.classList.add('click_on');
+    $comments_list.classList.remove('click_off');
+  });
+
+
+
+  const $fla = [[${fac}]];
+
+  // 지도 생성 시 특정 기본 위치로 시작
+  var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+    mapOption = {
+      center: new kakao.maps.LatLng($fla.la, $fla.lo), // 지도의 중심좌표
+      level: 4, // 지도의 확대 레벨
+    };
+
+  // 지도를 생성합니다
+  var map = new kakao.maps.Map(mapContainer, mapOption);
+  //map.setDraggable(false);
+  //map.setZoomable(false);
+  // 마커가 표시될 위치입니다
+  var markerPosition  = new kakao.maps.LatLng($fla.la, $fla.lo);
+
+  // 마커를 생성합니다
+  var marker = new kakao.maps.Marker({
+      position: markerPosition
+  });
+
+  marker.setMap(map);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원상세</title>
+</head>
+<body>
+<form action="#" th:object="${detailForm}">
+  <ul>
+    <li><h3>회원상세</h3></li>
+    <li>
+      <label for="email" th:for="${#ids.next('email')}">아이디</label>
+      <input type="text" name="email" id="email" th:field="*{email}" readonly="readonly">
+    </li>
+    <li>
+      <label for="nickname" th:for="${#ids.next('nickname')}">별칭</label>
+      <input type="text" name="nickname" id="nickname" th:field="*{nickname}" readonly="readonly">
+    </li>
+    <li>
+      <span>성별</span>
+      <th:block th:each=" ele : ${gender} ">
+        <label for="male" th:for="${#ids.next('gender')}" th:text="${ele.description}"></label>
+        <input type="radio" th:field="*{gender}" th:value="${ele.name()}" disabled="disabled">
+      </th:block>
+
+      <th:block th:remove="all">
+        <label for="male">남자</label>
+        <input type="radio" name="gender" id="male" value="남자">
+        <label for="female">여자</label>
+        <input type="radio" name="gender" id="female" value="여자">
+      </th:block>
+    </li>
+    <li>
+      <span>취미</span>
+      <th:block th:each="ele : ${hobbys}">
+        <label for="" th:for="${#ids.next('hobby')}" th:text="${ele.value}"></label>
+        <input type="checkbox" name="" id="" value="" th:value="${ele.value}" th:field="*{hobby}" disabled="disabled">
+      </th:block>
+
+      <th:block th:remove="all">
+        <label for="">독서</label>
+        <input type="checkbox" name="" id="" value="">
+        <label for="">수영</label>
+        <input type="checkbox" name="" id="" value="">
+        <label for="">등산</label>
+        <input type="checkbox" name="" id="" value="">
+        <label for="">골프</label>
+        <input type="checkbox" name="" id="" value="">
+      </th:block>
+    </li>
+    <li>
+      <span>지역</span>
+      <select name="" id="" th:field="*{region}" disabled="disabled">
+        <option value="">==선 택==</option>
+        <th:block th:each=" ele : ${regions} ">
+          <option value="서울" th:value="${ele}" th:text="${ele}">서울</option>
+        </th:block>
+      </select>
+
+      <th:block th:remove="all">
+        <select name="" id="">
+          <option value="">==선 택==</option>
+          <option value="서울">서울</option>
+          <option value="부산">부산</option>
+          <option value="울산">울산</option>
+          <option value="대구">대구</option>
+          <option value="제주">제주</option>
+        </select>
+      </th:block>
+    </li>
+    <li>
+      <a th:href="@{/admin/members}">회원목록</a>
+      <a href="#" id="outMember" th:data-email="*{email}">회원탈퇴</a>
+    </li>
+  </ul>
+</form>
+
+<script>
+    outMember.addEventListener('click',function(evt){
+      evt.preventDefault();  //기본 이벤트 처리 방지
+      if(!confirm('회원삭제 하겠습니까?')){
+        return false;
+      }else{
+        const email = evt.target.dataset.email;
+        location.href=`/admin/members/${email}/del`;
+      }
+    });
+  </script>
+</body>
+</html>

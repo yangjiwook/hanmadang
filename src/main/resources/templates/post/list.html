@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{},                        <!--/* styles */-->
+        ~{::script},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+  <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+  <meta name="author" content="KH java 할수있조">
+  <title>목록</title>
+  <script defer src="" th:src="@{/js/post/list.js}"></script>
+</head>
+<body>
+<div class="wrapper">
+  <div class="upperHeader">
+    <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::nav}"></th:block>
+  </div>
+
+
+  <!-- =============================================         -->
+  <main id="myInfoMain">
+    <!--  내정보 code      -->
+    <div class="post-wrap" th:data-code="${category}">
+      <div class="post-title" ><h3 th:text="${postTitle['__${category}__']}?:_"></h3></div>
+      <div id="imageFiles">
+        <th:block th:each="event : ${list}">
+        </th:block>
+      </div>
+      <div class="post-body">
+        <!--            공연-->
+        <div class="post-content" th:if="${list} and ${category} == B0101">
+          <div class="gallery">
+            <div th:each="event : ${list}" th:class="${eventStat.odd} ? odd_row__color">
+              <div class="card">
+                <div class="card-body">
+                  <div class="contents__list">
+                    <!--                    <th:block th:each="event : ${list}">-->
+                    <a href="" th:href="@{/post/{id}(id=${event.eventId},category=B0101)}">
+                      <figure>
+                        <img width="100px" href="/events/21" th:href="@{/post/{id}(id=${event.eventId},category=B0101)}"  th:src="${event.poster}"
+                             alt="이미지를 불러올수 없습니다">
+                      </figure>
+                    </a>
+                    <!--                    </th:block>-->
+                    <div class="contents__item">
+                      <div class='contents-box'>
+                        <p class="contents-category" th:text="${event.genrenm}">공연</p>
+                        <a href="/events/21" th:href="@{/post/{id}(id=${event.eventId},category=B0101)}"  th:text="${event.prfnm}">이봐 김서방</a>
+                        <div>
+                          <p th:text="${event.prfpdfrom}">2022.09.24</p>
+                          <p th:text="${event.prfpdto}">2022.09.25</p>
+                          <p th:text="${event.fcltynm}">10000</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =============================================         -->
+        <!-- 홍보 후기-->
+        <div class="post-content" th:if="${list} and (${category} == B0102 or ${category} == B0103)">
+          <table>
+            <thead>
+            <tr>
+              <th>번호</th>
+              <!--                  <th>분류</th>-->
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성일</th>
+              <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${list}">
+              <td th:text="${item.postId}"></td>
+              <td>
+                <!--들여쓰기-->
+                <th:block th:if="${item.pindent} > 0">
+                  <!--                  컬렉션없이 단순 반복 처리하고자할때 -->
+                  <!--                  Create a sequence (array) of integer numbers going from x to y -->
+                  <!--                  ${#numbers.sequence(from,to)}-->
+                  <span th:each="cnt : ${#numbers.sequence(1,item.pindent)}">&nbsp;&nbsp;</span>
+                  <!--                      <i class="fa-solid fa-reply"></i>-->
+                  <i class="fa-solid fa-comment-dots"></i>
+                </th:block>
+                <a href="" th:href="@{/post/{id}(id=${item.postId},category=${category})}" th:text="${item.title}">제목</a>
+              </td>
+              <td th:text="${item.nickname}">작성자1</td>
+              <td th:text="${#temporals.format(item.cdate,'yy/MM/dd HH:dd')}">작성일1</td>
+              <td th:text="${item.hit}">5</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--  회원 구분 gubun == 'M0101' => 일반회원 // 'M0102' => 홍보회원      -->
+        <!--  카테고리  category == 'B0103' => 후기글 // 'B0102' => 홍보글      -->
+        <div class="post-btngrp" th:if="${list} and (${category} == B0102 or ${category} == B0103)">
+          <!--  if = 세션이 비어있지않고 and ( (카테고리=후기 and (회원=일반 or 관리자1,2)) or (카테고리=홍보 and (회원=홍보 or 관리자1,2)) )         -->
+          <button type="botton" id="writeBtn"
+                  th:if="${!session.isEmpty() and ((category == 'B0103' and
+                  (session.LoginMember.gubun == 'M0101' or session?.LoginMember?.gubun == 'M01A1' or session?.LoginMember?.gubun == 'M01A2'))
+          or (category == 'B0102' and (session.LoginMember.gubun == 'M0102' or session?.LoginMember?.gubun == 'M01A1' or session?.LoginMember?.gubun == 'M01A2')) ) }"
+                  th:data-code="${code}" class="btn btn-outline-primary btn-sm">글쓰기</button>
+        </div>
+
+        <div class="post-page">
+          <!--이전페이지정보-->
+          <th:block th:if="${fc.prev}">
+            <a class="post-page-item" href=""
+               th:href="@{/post/list/1/{searchType}/{keyword}(searchType=${fc.searchType},keyword=${fc.keyword},category=${param.category})}">
+              <i class="fas fa-angle-double-left"></i>
+            </a>
+            <a class="post-page-item" href=""
+               th:href="@{/post/list/{reqPage}/{searchType}/{keyword}(reqPage=${fc.startPage-1},searchType=${fc.searchType},keyword=${fc.keyword},category=${param.category})}">
+              <i class="fas fa-angle-left"></i>
+            </a>
+          </th:block>
+
+          <!--페이지표시-->
+          <th:block th:each="pnum : ${#numbers.sequence(fc.startPage,fc.endPage)}">
+            <th:block th:if="${pnum != 0}">
+              <!--                  <a class="bbs-page-item" th:classappend="${fc.rc.reqPage == pnum} ? 'active'" href="" th:href="@{|/bbs/list/${pnum}|}" th:text="${pnum}">1</a>-->
+              <a class="post-page-item" th:classappend="${fc.rc.reqPage == pnum} ? 'active'" href=""
+                 th:href="@{/post/list/{reqPage}/{searchType}/{keyword}(reqPage=${pnum},searchType=${fc.searchType},keyword=${fc.keyword},category=${param.category})}"
+                 th:text="${pnum}">1</a>
+            </th:block>
+          </th:block>
+
+          <!--다음페이지정보-->
+          <th:block th:if="${fc.next}">
+            <a class="post-page-item" href=""
+               th:href="@{/post/list/{reqPage}/{searchType}/{keyword}(reqPage=${fc.endPage+1},searchType=${fc.searchType},keyword=${fc.keyword},category=${param.category})}">
+              <i class="fas fa-angle-right"></i>
+            </a>
+            <a class="post-page-item" href=""
+               th:href="@{/post/list/{reqPage}/{searchType}/{keyword}(reqPage=${fc.finalEndPage},searchType=${fc.searchType},keyword=${fc.keyword},category=${param.category})}">
+              <i class="fas fa-angle-double-right"></i>
+            </a>
+          </th:block>
+        </div>
+
+        <div class="post-search">
+          <select id="searchType" name="searchType" th:field="${fc.searchType}">
+            <th:block th:if="${category} == B0101">
+              <option th:value="ETC">제목+내용</option>
+              <option th:value="ET">제목</option>
+              <option th:value="EC">내용</option>
+              <option th:value="EG">장르</option>
+              <option th:value="ED">일자</option>
+              <option th:value="EA">연령</option>
+            </th:block>
+            <th:block th:if="${category} != B0101">
+              <option th:value="TC">제목+내용</option>
+              <option th:value="T">제목</option>
+              <option th:value="C">내용</option>
+              <option th:value="E">아이디</option>
+              <option th:value="N">별칭</option>
+            </th:block>
+          </select>
+          <input type="text" id="keyword" name="keyword" th:field="${fc.keyword}">
+          <button id="searchBtn">검색</button>
+        </div>
+      </div>
+    </div>
+    <!--        문화지도-->
+    <div class="post-content" th:if="${category} == B0104">
+
+    </div>
+
+
+  </main>
+  <!--  main을 세분화하려면 상단 리스트에 추가하고 작성    -->
+
+  <!--end main -->
+  <script>
+
+  </script>
+
+</div>
+
+</body>
+</html>

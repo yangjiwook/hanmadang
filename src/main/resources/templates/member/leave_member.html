@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{::link},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+  <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+  <meta name="author" content="KH java 할수있조">
+  <title>울산한마당 | 회원탈퇴</title>
+  <link rel="stylesheet" href="../../static/css/member/leave_member.css" th:href="@{/css/member/leave_member.css}">
+
+
+
+</head>
+<body>
+<div id="wrapper">
+  <div class="upperHeader">
+    <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::lowerHeader}"></th:block>
+  </div>
+
+
+  <!-- ======================================================================================================            -->
+  <main id="leaveMemberMain">
+    <div class="container">
+      <!-- <div class="info__title">
+        <h2 id="title">로그인</h2>
+      </div> -->
+
+      <!--이미지 안내 배너-->
+      <div class="image_banner">
+        <div class="image_banner_in_box" style="width: 100%;">
+          <h2 style="font-weight: bold;">회원탈퇴</h2>
+        </div>
+      </div>
+
+      <div class="center__container">
+        <div class="container__div">
+          <span class="common leave__title" style="padding-top: 10%;">회원 탈퇴 확인</span>
+          <span class="common leave__sub">비밀번호를 입력하면 탈퇴가 완료됩니다.</span>
+          <!-- <span class="common login__title">회원탈퇴 화면</span> -->
+          <div class="leaveMember__box">
+            <form th:action="@{/members/leave}" class="box" th:method="post" th:object="${leaveForm}">
+              <div class="leaveMember__id_box">
+                <!--                  <h5>아이디 입력</h5>-->
+                <input type="hidden"  th:field="*{email}" placeholder="example@google.com">
+              </div>
+              <ul th:if="${#fields.hasErrors('email')}" th:class="errmsg">
+                <li th:each="err : ${#fields.errors('email')}" th:text="|${errStat.count}.${err}|" />
+              </ul>
+              <div class="leaveMember__pw_box">
+                <h5>비밀번호 입력</h5>
+                <input type="password" th:field="*{password}" placeholder="password">
+              </div>
+              <ul th:if="${#fields.hasErrors('password')}" th:class="errmsg">
+                <li th:each="err : ${#fields.errors('password')}" th:text="|${errStat.count}.${err}|" />
+              </ul>
+              <div class="leaveMember__btn">
+                <button id="leaveMemberBtn">탈퇴</button>
+                <button id="returnBtn">돌아가기</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- ======================================================================================================            -->
+
+
+</div>
+</body>
+</html>

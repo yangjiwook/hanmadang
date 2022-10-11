@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{::link},                        <!--/* styles */-->
+        ~{::script},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+  <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+  <meta name="author" content="KH java 할수있조">
+  <title>상세</title>
+  <link rel="stylesheet" href="../../static/css/post/detailForm.css" th:href="@{/css/post/detailForm.css}">
+  <script defer src="" th:src="@{/js/post/detailForm.js}"></script>
+</head>
+<body>
+<div class="wrapper">
+  <div class="upperHeader">
+    <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::nav}"></th:block>
+  </div>
+
+
+  <!-- =============================================         -->
+  <div class="main">
+    <div class="inner main-inner">
+      <main>
+        <div class="post-wrap" th:data-code="${category}">
+          <div class="post-title" ><h3 th:text="${postTitle['__${category}__']}?:_"></h3></div>
+          <div id="imageFiles">
+            <th:block th:each="event : ${list}">
+            </th:block>
+          </div>
+          <div class="class-body">
+            <form action="" method="post" th:object="${detailForm}">
+              <input type="hidden" th:field="*{postId}">
+              <input type="hidden" th:field="*{pcategory}">
+              <!-- <div class="post-hit">
+                <span class="post-hit-content post-hit-tit">조회수</span>
+                <span class="post-hit-content post-hit-cnt" th:text="*{hit}">10</span>
+              </div> -->
+              <div class="post-content">
+                <!-- <div><lable>분류</lable></div> -->
+                <!--                <div>-->
+                <!--                  <select name="" id="" class="w100" th:field="*{pcategory}" th:disabled="disabled">-->
+                <!--                    <option value="" >==선택==</option>-->
+                <!--                    <th:block th:each="code : ${classifier}">-->
+                <!--                      <option value="" th:value="${code.code}" th:text="${code.decode}">게시판1</option>-->
+                <!--                    </th:block>-->
+                <!--                  </select>-->
+                <!--                </div>-->
+                <!-- <div><lable>제목</lable></div> -->
+                <div><input type="text" name="" id="" class="detail-title" th:field="*{title}" th:readonly="readonly"></div>
+
+                <div class="detail-title-bottom">
+                  <div class="post-name">
+                    <lable class="post-name-content post-name-tit"><b>작성자</b></lable>
+                    <span class="post-name-content post-name-cnt" th:text="|*{nickname} ( *{email} )|"></span>
+                  </div><span class="sp">|</span>
+                  <div class="post-date">
+                    <lable  class="post-date-content post-date-tit"><b>등록일</b></lable>
+                    <span  class="post-date-content post-date-cnt">2010.10.04</span>
+                  </div><span class="sp">|</span>
+                  <div class="post-hit">
+                    <label class="post-hit-content post-hit-tit"><b>조회수</b></label>
+                    <span class="post-hit-content post-hit-cnt" th:text="*{hit}">10</span>
+                  </div>
+                </div>
+                <div class="title-bottom-extra">
+                  <th:block th:if="${promInfo}" th:object="${promInfo}">
+                    <label for="">시작일:<span th:text="*{adStartDay}"></span></label>
+                    <label for="">마감일:<span th:text="*{adEndDay}"></span></label>
+                    <label for="">참가비용:<span th:text="*{entFee}"></span></label>
+                  </th:block>
+                </div>
+                <!-- <div><lable>작성자</lable></div>
+                <div><span th:text="|*{nickname} ( *{email} )|"></span></div> -->
+                <!-- <div><lable>내용</lable></div> -->
+                <!--                <div><textarea name="" id="" rows="10" class="w100" th:field="*{bcontent}" th:readonly="readonly"></textarea></div>-->
+                <div class="post-text">
+                  <!-- <div class="post-attach"> -->
+                  <p class="file_text" onclick="doMini()"><i class="fa-regular fa-folder"></i> 첨부파일</p>
+                  <div id="file_toggle">
+                    <div th:each="file : ${attachFiles}">
+                      <ul>
+                        <li><a href="" th:href="@{|/attach/down/${file.uploadfileId}|}" th:text="${file.upload_filename}"></a>
+                          <th:block th:if="${#strings.contains(file.ftype,'image')}" >
+                            <img th:src="@{|/attach/view/${file.uploadfileId}|}" th:width="30px" th:height="30px">
+                          </th:block></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div th:each="file : ${attachFiles}">
+                    <th:block th:if="${#strings.contains(file.ftype,'image')}" >
+                      <img style="width: 500px;" th:src="@{|/attach/view/${file.uploadfileId}|}" >
+                    </th:block>
+                  </div>
+                  <div class="post_text"><p th:utext="*{pcontent}"></p></div>
+                </div>
+              </div>
+              <!--좋아요/공유-->
+              <div class="view_like">
+                <div class="content_view_like">
+                  <a href=""><i class="fa-regular fa-heart fa-2x"></i></a>
+                  <!--좋아요 누르면 꽉찬하트-->
+                  <!-- <a href=""><i class="fa-solid fa-heart fa-2x"></i></a> -->
+                  <!--공유-->
+                  <a href=""><i class="fa-solid fa-share-nodes fa-2x"></i></a>
+                </div>
+              </div>
+
+
+
+              <!--댓글-->
+
+              <div class="comment_list">
+                <div class="content_cmt_list">
+                  <div>댓 글</div>
+                  <ul class="comments">
+                    <input th:field="*{nickname}" type="text"></input>
+                    <input th:field="*{email}" type="text"></input>
+                  </ul>
+                </div>
+              </div>
+              <!--댓글작성/등록-->
+              <div>
+                <th:block th:if="${rList}" th:each="reply : ${rList}">
+
+                </th:block>
+                <div class="comment">
+                  <div id="replyList">
+                  </div>
+                </div>
+                <div class="cmt_write">
+                  <textarea name="" id="rcontent" cols="" rows="3" placeholder="(0/최대 300자)"></textarea>
+                  <button type="button" id="addReplyBtn" class="write_bnt" th:if="${!session.isEmpty()}">등록</button>
+                </div>
+              </div>
+
+
+
+
+              <div class="post-btngrp">
+
+
+
+                <!--글작성자와 세션아이디체크해서 동이한경우만 수행-->
+                <th:block th:if="*{email} eq ${s_email}">
+                  <button type="button" id="editBtn">수정</button>
+                  <button type="button" id="delBtn">삭제</button>
+                </th:block>
+                <!-------------------------------------------->
+                <button type="button" id="listBtn">목록</button>
+                <!--                <button type="button" id="replyBtn">답글</button>-->
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+    <div class="foot">
+      <div class="inner foot-inner">
+        <footer>
+          footer
+        </footer>
+      </div>
+    </div>
+  </div>
+  <!--end main -->
+
+
+</div>
+<script type="text/javascript">
+
+
+
+function doMini(){
+ console.log("doMini");
+const con = document.getElementById("file_toggle");
+if(con.style.display=='block'){
+  con.style.display = 'none';
+}else{
+  con.style.display = 'block';
+}}
+
+</script>
+
+
+</body>
+</html>

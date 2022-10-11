@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{::style},                        <!--/* style */-->
+        ~{::script},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},                 <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공연시설목록</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+
+  <style>
+
+    /* 지도와 공연장 리스트 div */
+    .map_wrap {
+      /*display: flex;*/
+    }
+
+    /* 지도 div */
+    .list--map {
+      /*flex: 4;*/
+      margin: 0 10px 10px 10px;
+    }
+
+    /* 공연장 리스트 div */
+    .list--table {
+      flex: 1;
+      margin-left: 10px;
+    }
+
+    .map_list {
+      position: relative;
+      width: 100%;
+      height: 500px;
+    }
+
+    /* 공연장 체크박스 css */
+    #category {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    #category .btn-group-sm {
+      min-width: 150px;
+    }
+
+    .poster--container {
+      width: 100%;
+      height: 500px;
+      margin: 20px 0;
+      outline: 1px solid rgba(187, 187, 187, 0.521);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.102);
+    }
+
+    #poster {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    #poster .now--list {
+      display: flex;
+      flex-direction: column;
+      margin: 10px;
+      width: 150px;
+      height: 250px;
+      text-align: center;
+    }
+
+    #poster .now--list .now--list-poster {
+      width: 100%;
+      height: 85%;
+      font-weight: bold;
+    }
+
+    #poster .now--list .now--list-title {
+      display: table-cell;
+      text-align: center;
+      width: 100%;
+      height: 15%;
+      padding-top: 3px;
+      font-size: 0.9em;
+    }
+
+    /* 공연장 관련 css */
+        .list--table .list--tbody {
+            display: flex;
+            flex-wrap: wrap;
+            position: absolute;
+            right: 1%;
+            bottom: 1%;
+            width: 200px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+            outline: 1px solid rgba(187, 187, 187, 0.521);
+        }
+
+    /* 공연장 제목 css */
+    .list--table .list--tbody .tr-title {
+      outline: 1px solid lightslategrey;
+      display: table;
+      width: 100%;
+      height: 50px;
+    }
+
+    .list--table .list--tbody .tr-title .td-title {
+      background-color: #0094bc;
+      color: rgb(255, 250, 240);
+      width: 100%;
+      height: 100%;
+      font-weight: 100;
+      text-align: center;
+      padding: 10%;
+      font-weight: bold;
+    }
+
+    .list--table .list--tbody .list--tr {
+      display: table;
+      width: 100%;
+      height: 25px;
+    }
+
+    .list--table .list--tbody .list--tr .list--td {
+      display: table-cell;
+      width: 100%;
+      height: 100%;
+      font-size: 0.8em;
+      text-align: center;
+      padding: 5%;
+    }
+
+    .list--table .list--tbody .list--tr .list--td:hover {
+      z-index: 999;
+      background-color: rgba(255, 109, 0, 0.2);
+      font-weight: bold;
+      color: var(--color-main);
+
+    }
+    .map_miny_info_box {
+      display: block;
+      background: #fff;
+      color: black;
+      line-height: 22px;
+      border-radius: 4px;
+      height: 100px;
+      font-size: 0.8rem;
+      box-shadow: 0 0 10px rgb(0 0 0 / 30%);
+      outline: 2px solid white;
+    }
+
+    #mini_hide_button {
+      position: absolute;
+      z-index: 1;
+      top: 0%;
+      right: 0%;
+      background: white;
+    }
+
+    #map {
+      width: 100%;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+      outline: 1px solid rgba(187, 187, 187, 0.521);
+    }
+
+
+
+  </style>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <div class="upperHeader">
+    <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::lowerHeader}"></th:block>
+  </div>
+  <!-- ======================================================================================================            -->
+
+  <main id="myInfoMain">
+
+    <div class="all_wrap" style="width: 80%;">
+      <div class="container">
+        <div class="image_banner">
+          <div class="image_banner_in_box_map">
+            <h2 style="">문화지도</h2>
+          </div>
+        </div>
+        <!--    <div class="title">-->
+        <h5 style="padding:1%;"><i class="fa-solid fa-location-dot"></i>
+          </svg> 원하는 장소를 탐색해봅시다.</h5>
+        <!--    </div>-->
+        <!--    <hr />-->
+        <div class="map_wrap">
+          <div class="list--map">
+            <!--지도 생성-->
+            <div class="map_list">
+              <div id="map"></div>
+
+              <table class="list--table" id="list--mini">
+                <tbody class="list--tbody">
+                <tr class="tr-title">
+                  <td class="td-title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cursor-fill" viewBox="0 0 16 16">
+                    <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+                  </svg>
+                    여기는 어떤가요?
+                  </td>
+                </tr>
+                <tr class="list--tr" th:each="rec :${flist}" th:data-address-id="${rec.adres}" th:data-place-id="${rec.fcltynm}"
+                    th:data-tel-id="${rec.telno}" th:data-homepage-id="${rec.relateurl}" th:data-f10-id="${rec.mt10id}">
+                  <td class="list--td"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                  </svg>[[${rec.fcltynm}]]</td>
+                </tr>
+                </tbody>
+              </table>
+              <div id="mini_hide_button">
+                <button  onclick="doMini()" type="button" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-eye-slash"></i></button>
+              </div>
+
+            </div>
+
+            <!-- 체크박스 생성 -->
+            <div id="category">
+              <div  class="btn-group-sm chk1">
+                <select onchange="genreChange()" id="selectBox" class="form-select" aria-label="Default select example">
+                  <option selected>장르[전체]</option>
+                  <option value="AAAA">연극</option>
+                  <option value="AAAB">뮤지컬</option>
+                  <option value="BBBA">무용</option>
+                  <option value="CCCA">클래식</option>
+                  <option value="CCCB">오페라</option>
+                  <option value="CCCC">국악</option>
+                  <option value="EEEA">복합</option>
+                </select>
+              </div>
+
+              <div class="btn-group btn-group-sm option chk2" role="group" aria-label="Small button group">
+                <!-- 카테고리 코드 -->
+                <button type="button" class="btn btn-outline-dark" id="000" data-order="3">초기화</button>
+                <button type="button" class="btn btn-outline-dark" id="CS2" data-order="4">편의점</button>
+                <button type="button" class="btn btn-outline-dark" id="PK6" data-order="5">주차장</button>
+                <button type="button" class="btn btn-outline-dark" id="CE7" data-order="6">카페</button>
+              </div>
+            </div>
+
+            <!-- 포스터 -->
+            <div class="poster--container">
+              <div id="poster">
+
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<script th:inline="javascript">
+  //35.53500722683425, 129.31083237117357
+  const $tbody = document.querySelector(".list--table .list--tbody");
+  // 선택한 공연장의 주소 + 공연장명을 담아서 지도 검색에 사용할 키워드
+  let address_all;
+  // 공연장 ID (다른 공연장 클릭할때마다 초기화하기위한 변수)
+  let static_fid;
+
+  // 검색된 마커
+  let search_Marker = [];
+
+  // 공연장 리스트 JSON
+  let facArr = [[${flist}]];
+
+
+  // 지도 생성 시 특정 기본 위치로 시작
+  var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+    mapOption = {
+      center: new kakao.maps.LatLng(35.53500722683425, 129.31083237117357), // 지도의 중심좌표
+      level: 9, // 지도의 확대 레벨
+    };
+
+  // 지도를 생성합니다
+  var map = new kakao.maps.Map(mapContainer, mapOption);
+
+
+  var miniInfowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+  for(let i=0 ;i<facArr.length; i++){
+    displayMarker(facArr[i]);
+  }
+
+
+  // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다
+  function closeOverlay() {
+    miniInfowindow.setMap(null);
+  }
+
+  // 지도에 마커를 표시하는 함수입니다
+  function displayMarker(place) {
+    // 마커를 생성하고 지도에 표시합니다
+    var init_marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(place.la, place.lo)
+    });
+    search_Marker.push(init_marker);
+
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(init_marker, 'click', function() {
+        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        miniInfowindow.setContent(`
+        <div class="close" onclick="closeOverlay()" title="닫기" style="float:right;margin-right:5px;"><i class="fa-regular fa-rectangle-xmark"></i></div>
+        <div style="width:210px;text-align:center;padding:3px;margin:2px;font-size:0.8em;">
+          <p>장소 : ${place.fcltynm}</p>
+          <a href="${place.relateurl}" target="_blank" style="color:orange;">홈페이지 바로가기</a>
+        </div>
+        `);
+        miniInfowindow.open(map, init_marker);
+    });
+  }
+
+
+  // 공연장 주소를 통한 지도 검색
+  function findInfo(addres, place, tel, homepage) {
+    // 마커 지우기
+    removeMarker(marker_all);
+    // 인포윈도우 지우기
+    miniInfowindow.close();
+
+    if(search_Marker.length > 0) {
+      for(let i=0; i<search_Marker.length; i++){
+        search_Marker[i].setMap(null);
+      }
+      search_Marker = [];
+    }
+
+    // 주소 + 공연장 이름으로 주소 검색
+    address_all = addres + " " + place;
+
+    // console.log("place : " + address_all);
+
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    // 주소로 좌표를 검색합니다
+    geocoder.addressSearch(address_all, function (result, status) {
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords,
+        });
+        // 개별 검색시 지도 레벨4로 변경
+        map.setLevel(4);
+
+        search_Marker.push(marker);
+
+
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+
+        // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+        // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        var iwContent = `
+              <div style="width:500px;text-align:center;padding:20px;margin:10px">
+                <P>장소 : ${place}</p>
+                <P>주소 : ${addres}</p>
+                <P>전화번호 : ${tel}</p>
+                <a href="${homepage}" target="_blank" style="color:orange;">홈페이지 바로 가기</a>
+              </div>`,
+          iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+        // 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+          content: iwContent,
+          removable: iwRemoveable,
+        });
+        kakao.maps.event.addListener(marker, "click", function () {
+          // 마커 위에 인포윈도우를 표시합니다
+          infowindow.open(map, marker);
+        });
+      }
+    });
+
+    console.log(search_Marker);
+  }
+  // ==================================================================== 지도 끝
+
+  let nowList = [];
+
+  // 장르 select box가 변경되면 리스트 재설정
+  function genreChange() {
+    nowList_Func(static_fid);
+  }
+
+  // 해당 공연장의 공연 리스트 출력 함수
+  function nowList_Func(fId) {
+    // 새로 클릭할때마다 배열 초기화
+    nowList.length = 0;
+
+    // 생성된 div를 초기화
+    if(document.querySelector('#poster') != null){
+      const old_list = document.querySelector('#poster');
+      old_list.replaceChildren();
+    }
+
+    // 셀렉 박스의 text 값을 받아와서 저장
+    let selectBox = document.getElementById("selectBox");
+    let genre = selectBox.options[selectBox.selectedIndex].text;
+
+    //.fcltynm mt10id prfnm poster
+
+    // pEvent List 불러오기
+    let lists = [[${ elist }]];
+
+    //pEvent에서 선택한 공연장에서 진행하는 공연들만 저장
+    for (let i = 0; i < lists.length; i++) {
+      if (lists[i].mt10id === fId) {
+        // 장르가 전체이거나 선택한 장르가 일치하면 List에 push
+        if(lists[i].genrenm === genre || genre === '장르[전체]'){
+          nowList.push(lists[i]);
+        }
+      }
+    }
+    // console.log(nowList);
+
+    for(let i=0; i<nowList.length; i++) {
+      //최상위 위치의 poster div 연결
+      const $poster = document.getElementById('poster');
+
+      // 하위에 생성될 div 생성
+      const newDivList = document.createElement('a');
+      // /post/20?category=B0101
+      newDivList.setAttribute('href',`/post/${nowList[i].eventId}?category=B0101`);
+      // 클래스명 now--list
+      newDivList.className = 'now--list';
+
+      // now--list 하위에 생성될 img & span
+      const newImg = document.createElement('img');
+      newImg.className = 'now--list-poster';
+      // img src에 poster 주소 넣기
+      newImg.src = nowList[i].poster;
+
+      const newSpan = document.createElement('span');
+      newSpan.className = 'now--list-poster';
+      // span에 공연 제목 넣기
+      newSpan.innerHTML = nowList[i].prfnm;
+
+      // 요소 연결
+      newDivList.appendChild(newImg);
+      newDivList.appendChild(newSpan);
+
+      $poster.appendChild(newDivList);
+    }
+  }
+
+
+  // 공연장 이름 클릭했을때
+  $tbody.addEventListener("click", (e) => {
+    if (e.target.classList.contains("list--td")) {
+      // console.log('td : '+e.target.parentElement.dataset.addressId);
+      // console.log(e.target.parentElement.dataset.placeId);
+
+      // 클릭한 공연장 정보
+      // 주소
+      const addres = e.target.parentElement.dataset.addressId;
+      // 공연장 이름
+      const place = e.target.parentElement.dataset.placeId;
+      // 전화번호
+      const tel = e.target.parentElement.dataset.telId;
+      // 홈페이지
+      const homepage = e.target.parentElement.dataset.homepageId;
+      // 공연장시설번호
+      const fId = e.target.parentElement.dataset.f10Id;
+      static_fid = fId;
+
+      // const $eventId = e.target.parentElement.dataset.eventId;
+      // console.log($eventId);
+
+      // 지도 검색
+      findInfo(addres, place, tel, homepage);
+      // 해당 공연장의 공연 리스트
+      nowList_Func(fId);
+    }
+  });
+
+
+
+  var marker_all = [];
+
+
+  function categorySelect(_category) {
+
+    // 마커를 담은 배열이 존재하면
+    if(marker_all.length > 0 || _category == '000'){
+      // 새로운 마커를 표시하기 위해 이전 마커들을 제거
+      for (var i = 0; i < marker_all.length; i++) {
+        marker_all[i].setMap(null);
+      }
+    }
+
+    // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
+    var placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 }),
+      contentNode = document.createElement('div'), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
+      markers = [], // 마커를 담을 배열입니다
+      currCategory = ''; // 현재 선택된 카테고리를 가지고 있을 변수입니다
+
+
+
+    // 장소 검색 객체를 생성합니다
+    var ps = new kakao.maps.services.Places(map);
+
+
+    // _category CS2 편의점 PK6 주차장  CE7 카페
+
+    var imageSrc = '';
+    if(_category == 'CS2'){
+      //imageSrc = '../../../static/img/Marker_shop.png';
+      imageSrc = 'https://cdn4.iconfinder.com/data/icons/placeholder-6/64/shopping-shopping_cart-maps-location-placeholder-pin-512.png';
+    }else if (_category == 'PK6'){
+      //imageSrc = '../../../static/img/Marker_parking.png';
+      imageSrc = 'https://cdn4.iconfinder.com/data/icons/placeholder-6/64/parking-car_parking-maps-location-placeholder-pin-512.png';
+    }else if(_category == 'CE7'){
+      //imageSrc = `../../../static/img/Marker_cafe.png`;
+      imageSrc = 'https://cdn4.iconfinder.com/data/icons/placeholder-6/64/coffee-coffee_shop-maps-location-placeholder-pin-512.png';
+    }else {
+      imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/2018/pc/img/marker_spot.png';
+
+    }
+
+    imageSize = new kakao.maps.Size(41,45); // (64, 69), (* 0.65) 마커이미지의 크기입니다
+    //imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),//, imageOption),
+        markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
+
+
+
+    // 카테고리 검색을 시작
+    ps.categorySearch(_category, placesSearchCB, { useMapBounds: true });
+
+    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+    function placesSearchCB(data, status, pagination) {
+      if (status === kakao.maps.services.Status.OK) {
+        displayMarker(data);
+      }
+    }
+
+    // 지도에 마커를 표시하는 함수입니다
+    function displayMarker(place) {
+
+      for (var i = 0; i < place.length; i++) {
+        // 마커를 생성하고 지도에 표시합니다
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(place[i].y, place[i].x),
+          image: markerImage // 마커이미지 설정
+        });
+
+        // 마커를 배열에 담음
+        marker_all[i] = marker;
+
+        // // 마커에 클릭이벤트를 등록합니다
+        // kakao.maps.event.addListener(marker, 'click', function () {
+        //   // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        //   infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place[i].place_name + '</div>');
+        //   infowindow.open(map, marker);
+        // });
+      }
+
+    }
+
+  }
+
+  // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+  function removeMarker(place) {
+    console.log('카테고리 마커 제거');
+    // 마커를 담은 배열이 존재하면
+    if(place.length > 0){
+      console.log('제거 가능');
+      // 새로운 마커를 표시하기 위해 이전 마커들을 제거
+      for (var i = 0; i < place.length; i++) {
+        place[i].setMap(null);
+      }
+    }
+}
+
+  const chk2 = document.querySelector(".chk2");
+  chk2.addEventListener('click', e => {
+    categorySelect(e.target.id);
+  });
+
+  //지도 공연장리스트 숨기기
+  function doMini(){
+    console.log("doMini");
+    const con = document.getElementById("list--mini");
+    if(con.style.display=='none'){
+        con.style.display = 'block';
+    }else{
+        con.style.display = 'none';
+    }
+  }
+
+
+</script>
+</body>
+
+</html>

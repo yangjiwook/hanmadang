@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+
+        <!--/* =========== 사용 의미 =========== */-->
+        <!--/* ~{::xxx} : layout페이지에 선언한 요소가 있지만 layout에서 안쓰고 현재 페이지의 xxx를 사용 */-->
+        <!--/* ~{}      : layout페이지의 해당 요소를 사용  (현재 페이지에서 작성안해도 되는 코드) */-->
+        <!--/* _        : layout페이지 그대로 요소를 사용 */-->
+        <!--/* ~{} 와 _ 의 차이는 fragment 선언 유무? _ 로 선언하면 해당 페이지에 선언안해도 됨 ex) footer */-->
+
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>연습용페이지</title>
+
+
+</head>
+<body>
+<div class="wrapper">
+  <div class="upperHeader">
+    <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::nav}"></th:block>
+  </div>
+
+
+  <!-- =============================================         -->
+  <div class="main">
+    <main id="myInfoMain">
+      <!--  내정보 code      -->
+    </main>
+    <!--  main을 세분화하려면 상단 리스트에 추가하고 작성    -->
+  </div>
+  <!--end main -->
+
+
+</div>
+
+</body>
+</html>

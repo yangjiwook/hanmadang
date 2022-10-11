@@ -1,0 +1,122 @@
+#leaveMemberMain{
+  width: 100%;
+  height: 100%;
+  /* outline:1px solid red; */
+}
+
+
+  #leaveMemberMain .container .center__container{
+    outline: 0;
+     height: 50%;
+    /* outline: 1px solid red; */
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+
+  #leaveMemberMain .container .center__container .container__div{
+    outline: 1px solid #ccc;
+    border-radius: 10px;
+  }
+
+        
+        
+        
+        .center__container .container__div .login__box .box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            outline: 1px solid gray;
+            width: 100%;
+            position: relative;
+        }
+
+     
+        /* 세부 css */
+
+        .leaveMember__id_box {
+            margin-top: 20px;
+            width: 100%;            
+        }
+
+        .leaveMember__id_box h5,
+        .leaveMember__pw_box h5{
+          font-weight: bold;
+        }
+
+
+        /* ID(email) input */
+        .leaveMember__id_box input {
+                width: 100%;
+                height: 50px;
+                margin-top: 10px;
+                padding: 0px 20px;
+                border: 1px solid #ccc;
+        }
+
+        /* PW input */
+        .leaveMember__pw_box {
+            padding: 2% 15%;
+            text-align: center;
+        }
+
+        .leaveMember__pw_box input {
+            width: 100%;
+            height: 50px;
+            /* border-radius: 30px; */
+            margin-top: 10px;
+            padding: 0px 20px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+  
+        .leaveMember__btn {
+            display: flex;
+            justify-content: center;
+            padding: 0 5% 10%;
+        }
+
+        .leaveMember__btn #leaveMemberBtn {
+            background-color: #ff6d00;
+            color: white;
+            border: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            height: 50px;
+            width: 25%;
+            border-radius: 5px;
+            margin: 4%;
+        }
+
+        .leaveMember__btn #returnBtn {
+          background-color: white;
+          color: #ff6d00;
+          border: none;
+          font-size: 1.2em;
+          font-weight: bold;
+          height: 50px;
+          width: 25%;
+          border-radius: 5px;
+          margin: 4%;
+      }
+
+        .errmsg {
+          font-size:0.8em;
+          font-weight:bold;
+          color:red;
+        }
+        ul {
+          margin:0;padding:0
+        }
+        ul,li{
+          text-decoration:none;
+        }
+        .fieldError{
+          border:1px solid red;
+          color:red;
+        }
+        .fieldSuccess{
+          border:1px solid green;
+          color:green;
+        }

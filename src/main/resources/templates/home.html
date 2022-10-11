@@ -1,0 +1,238 @@
+  <!DOCTYPE html>
+    <html lang="ko"
+          xmlns:th="http://www.thymeleaf.org"
+          th:replace="~{layout/layout::main(
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{::script},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+      <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+      <meta name="author" content="KH java 할수있조">
+      <title>울산한마당 | 메인화면</title>
+ 
+    </head>
+
+    <body>
+    <div id="wrapper">
+      <div class="upperHeader">
+        <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+      </div>
+      <div class="nav">
+        <th:block th:replace="~{layout/nav::lowerHeader}"></th:block>
+      </div>
+
+      <main id="main">
+        <div class="main__wrapper">
+
+          <!--슬라이드 파트-->
+          <header id="header" class="container">
+            <div id="carouselExampleIndicators" class="carousel carousel slide carousel-fade" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+              <div class="carousel-inner"  th:if="${elist}" th:object="${elist}">
+                <div class="carousel-item active">
+                  <a href="/post/3?category=B0101" > <img class="" src="img/2.jpg" style="with:1100ex; max-width: 100%; height: auto;" alt="...">
+                  </a>
+                </div>
+                <div class="carousel-item">
+                  <a href="/post/6?category=B0101"><img class="" src="/img/3.jpg" style="with:1100ex; max-width: 100%; height: auto;" alt="..."></a>
+                </div>
+                <div class="carousel-item">
+                  <a href="/post/9?category=B0101"><img class="d" src="/img/1.jpg" style="with:1100ex; max-width: 100%; height: auto;" alt="..."></a>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </header>
+
+          <!--메인 내용-->
+          <section>
+            <div class="main_container">
+              <div class="middle_container">
+
+                <div class="sub_title_per">
+                  <div class="title">
+                    <a>공연</a>
+                    <a>performance</a>
+                  </div>
+                  <div class="middle_performance">
+                    <!--공공데이터 이미지 컨텐츠-->
+                    <div th:if="${elist}" th:object="${elist}" >
+                      <th:block th:each="event : ${elist}">
+                        <a href="" th:href="@{/post/{id}(id=${event.eventId},category=B0101)}">
+                          <img th:src="${event.poster}" style="object-fit: cover; height:200px; outline: 1px solid rgba(187, 187, 187, 0.521);" alt="" width="180px">
+                        </a>
+                      </th:block>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="sub_title_exh">
+                  <div class="title">
+                    <a>홍보</a>
+                    <a>advertisement</a>
+                  </div>
+                  <div class="middle_advertisement">
+                    <!--홍보 이미지 컨텐츠-->
+                    <div th:if="${plist}" th:object="${plist}" >
+                      <th:block th:each="prom : ${plist}" th:if="promStat.size != 0">
+                        <img src="" alt="">
+                        <a href="" th:href="@{/post/{id}(id=${prom.rid},category=B0102)}">
+                          <img th:src="@{/attach/view/{id}(id=${prom.uploadfileId})}" style="object-fit: cover; height:200px; outline: 1px solid rgba(187, 187, 187, 0.521);" alt="" width="180px">
+                        </a>
+                      </th:block>
+                    </div>
+                  </div>
+                  </div>
+      
+                </div>
+            
+
+              <!-- <div class="main_wrap"> -->
+              <div class="bottom_container">
+                <div class="main_b">
+                  <div class="ad_board_tit">
+                    <div>홍보게시판</div>
+                    <div> advertisement</div>
+                    <a href="#" th:href="@{/post/list?category=B0102}">+더보기</a>
+                  </div>
+
+                  <div class="board_list">
+                    <div class="list_body">
+                      <div class="list_contents" th:each="prom : ${newPromList}">
+                        <div>
+                          <a href="" th:href="@{/post/{id}(id=${prom.postId},category=B0102)}"><div>[[${prom.title}]]</div></a>
+                        </div>
+                        <div>
+                          <div>[[${#temporals.format(prom.udate, 'yyyy-MM-dd HH:mm')}]]</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="review_board_tit">
+                    <div>후기게시판</div>
+                    <div> review</div>
+                    <a href="#" th:href="@{/post/list?category=B0103}">+더보기</a>
+                  </div>
+
+                  <div class="board_list">
+                    <div class="list_body">
+                      <div class="list_contents" th:each="review : ${newReviewList}">
+                        <div>
+                          <a href="" th:href="@{/post/{id}(id=${review.postId},category=B0103)}"><div>[[${review.title}]]</div></a>
+                        </div>
+                        <div>
+                          <div>[[${#temporals.format(review.udate, 'yyyy-MM-dd HH:mm')}]]</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div class="main_m">
+                  <div class="map_tit">
+                    <div>지도</div>
+                    <div>map</div>
+                    <a th:href="@{/map}">+더보기</a>
+                  </div>
+                  <!--지도-->
+                  <div id="map" style="width:650px; height:400px;"></div>
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+
+    <script th:inline="javascript">
+
+    // 검색된 마커
+    let search_Marker = [];
+
+    // 공연장 리스트 JSON
+    let facArr = [[${ flist }]];
+    // console.log(facArr);
+
+    // 지도 생성 시 특정 기본 위치로 시작
+    var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+      mapOption = {
+        center: new kakao.maps.LatLng(35.55500722683425, 129.31083237117357), // 지도의 중심좌표
+        level: 9, // 지도의 확대 레벨
+      };
+
+    // 지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    var miniInfowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+    for(let i=0 ;i<facArr.length; i++){
+      displayMarker(facArr[i]);
+    }
+
+
+    // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다
+    function closeOverlay() {
+      miniInfowindow.setMap(null);
+    }
+
+    // 지도에 마커를 표시하는 함수입니다
+    function displayMarker(place) {
+        // 마커를 생성하고 지도에 표시합니다
+        var init_marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(place.la, place.lo)
+        });
+
+        // 마커에 클릭이벤트를 등록합니다
+        kakao.maps.event.addListener(init_marker, 'click', function() {
+            // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+            miniInfowindow.setContent(`
+            <div class="close" onclick="closeOverlay()" title="닫기" style="float:right;margin-right:5px;"><i class="fa-regular fa-rectangle-xmark"></i></div>
+            <div style="width:210px;text-align:center;padding:3px;margin:2px;font-size:0.8em;">
+              <p>장소 : ${place.fcltynm}</p>
+              <a href="${place.relateurl}" target="_blank" style="color:orange;">홈페이지 바로가기</a>
+            </div>
+            `);
+            miniInfowindow.open(map, init_marker);
+
+        });
+
+
+    }
+  </script>
+    </body>
+    </html>

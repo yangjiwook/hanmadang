@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{::link},                        <!--/* styles */-->
+        ~{::script},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 답글 작성</title>
+  <link rel="stylesheet" href="" th:href="@{/css/post/replyForm.css}">
+  <script defer th:src="@{/js/common/ckeditor.js}"></script>
+  <script defer src="" th:src="@{/js/post/replyForm.js}"></script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="upperHeader">
+      <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+      <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+    </div>
+    <div class="nav">
+      <th:block th:replace="~{layout/nav::nav}"></th:block>
+    </div>w100
+  
+  <div class="main">
+    <div class="inner main-inner">
+      <main>
+        <div class="post-wrap" th:data-code="${category}">
+          <div class="post-title"><h3>게시글 답글 작성</h3></div>
+          <div class="class-body">
+            <form id="replyForm" action="" method="post" th:object="${replyForm}" enctype="multipart/form-data">
+              <input type="hidden" th:field="*{pcategory}">
+              <input type="hidden" th:field="*{email}">
+              <input type="hidden" th:field="*{nickname}">
+              <div class="post-content">
+                <div><lable>분류</lable></div>
+                <div>
+                  <select name="" id="" class="w100" th:field="*{pcategory}" th:disabled="disabled">
+                    <option value="" >==선택==</option>
+                    <th:block th:each="code : ${classifier}">
+                      <option value="" th:value="${code.code}" th:text="${code.decode}">게시판1</option>
+                    </th:block>
+                  </select>
+                  <div class="fieldError" th:errors="*{pcategory}"></div>
+                </div>
+                <div><lable>제목</lable></div>
+                <div>
+                  <input type="text" name="" id="" class="w100" th:field="*{title}">
+                  <div class="fieldError" th:errors="*{title}"></div>
+                </div>
+                <div><lable>작성자</lable></div>
+                <div><span th:text="|*{nickname} ( *{email} )|"></span></div>
+                <div><lable>내용</lable></div>
+                <div>
+                  <textarea name="" id="" rows="10" class="w100" th:field="*{pcontent}"></textarea>
+                  <div class="fieldError" th:errors="*{pcontent}"></div>
+                </div>
+                <div><lable>첨부</lable></div>
+                <div><input type="file" name="" id="" class="w100" th:field="*{files}" multiple></div>
+              </div>
+            
+          </div>
+          <div class="post-btngrp">
+            <button type="button" id="writeBtn">등록</button>
+            <button type="button" id="listBtn">목록</button>
+          </div>
+        </form>
+        </div>
+      </main>
+    </div>
+    <div class="foot">
+      <div class="inner foot-inner">
+        <footer>
+          footer
+        </footer>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,436 @@
+/*내정보*/
+
+ .image_banner_my_info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*그라데이션 배너*/
+.image_banner_in_box_my_info {
+    width: 2000px;
+    background: rgb(15,161,226);
+    background: linear-gradient(90deg, rgba(15,161,226,1) 35%, rgba(106,0,255,1) 100%);
+    text-align: center;
+    color: white;
+    padding: 50px 0;
+}
+
+/* 상단 제목 */
+/* .info__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+} */
+
+/*
+#myInfoMain {
+    padding-bottom: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+    background: rgb(247,247,247);
+}*/
+
+#infoMain{
+    padding-bottom: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+  /* outline:1px solid red; */
+}
+
+#commentMain {
+    padding-bottom: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+    background: rgb(247,247,247);
+}
+
+/* 현재 내정보 위치 (내정보/내정보수정/활동내역(내가쓴글,댓글,좋아요목록)) */
+.info__state {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 50px;
+  padding-left: 20px;
+  border-bottom: 1px solid rgba(187, 187, 187, 0.521);
+}
+
+.info__state svg {
+    color: rgb(129, 129, 129);
+}
+
+.info__state #state {
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* 클릭한 메뉴 강조 */
+.information .info__list .tab__state {
+  /* text-decoration: underline; */
+  /*font-weight: bold; */
+}
+
+/* 내정보 목록, 상세 정보 */
+.information{
+  display: flex;
+  /*padding: 0 5% 5% 5%;*/
+}
+/* 내정보 공통 */
+.information .info__index {
+  height: 600px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.192);
+}
+
+/* 목록 */
+.information .info__list {
+  flex: 2;
+  /* border: 1px solid silver; */
+  background: white;
+}
+
+.information .info__list .list__title {
+  font-size: 1em;
+  color: var(--color-sub);
+  text-align: center;
+  /*font-weight: bold;*/
+  padding: 15px 10px;
+  /* border-bottom : 1px solid gray; */
+
+}
+
+.information .info__list .list__title .info__box {
+    padding: 20px;
+    color: var(--color-sub);
+
+}
+
+/* .information .info__list .tab__state {
+  display: flex;
+} */
+
+/* 사이드 메뉴 css */
+.information .info__list .tab__state .info__side_menu {
+   padding: 30px 5px 15px 20px;
+  /* border: 1px solid darkgrey; */
+  /* border-radius: 5px; */
+
+}
+
+
+/* .information .info__list .tab__state .info__side_menu #toc-toggle:hover {
+  cursor: pointer;
+} */
+
+/* 활동내역 드롭다운 */
+.information .info__list .tab__state .dropmenu {
+  padding-left: 25px;
+  margin-top: 10px;
+  /* outline: 1px solid red; */
+  font-size: 0.9em;
+}
+.information .info__list .tab__state .dropmenu li {
+  margin: 7px 0;
+}
+.information .info__list .tab__state .info__side_menu #toc-toggle #arrow {
+  /* color: blue; */
+  height: 15px;
+  width: 15px;
+}
+
+/* 상세 정보  (form은  내정보에서 사용중)*/
+.information .info__detail {
+  flex: 8;
+  padding: 5%;
+  background: white;
+  overflow: auto;
+  /* border: 1px solid silver; */
+}
+
+/*상세정보 상단 타이틀*/
+.info__index_basic {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 10px;
+}
+
+/* ////////////////////////////////////////////////////////////// */
+/* 내정보수정, 회원탈퇴, 로그인등 공통 css */
+
+/* 정보수정 박스  */
+.center__container_update {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  padding: 30px 0;
+  min-height: 500px;
+}
+
+.center__container_update .container__div_update {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  outline: 1px solid #ccc;
+  border-radius: 10px;
+  height: 390px;
+  padding: 5%;
+}
+
+/* 정보수정 박스 제목*/
+.center__container_update .container__div_update .pwd__title {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.center__container_update .container__div_update .login__box {
+    padding-top: 8%;
+    text-align: center;
+}
+
+.center__container_update .container__div_update .pwd__box{
+    padding: 5%;
+}
+
+.center__container_update .container__div_update .pwd__sub {
+    font-size: 0.8em;
+    text-align: center;
+    color: #ccc;
+}
+
+.input__pwd1 {
+padding-top: 5%;
+}
+
+.input__pwd1 input {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    padding: 0px 20px;
+    border: 1px solid #ccc;
+}
+
+.btn__box1 {
+    display: flex;
+    padding: 5%;
+    justify-content: center;
+}
+
+.btn__box1 button {
+            background-color: var(--color-sub);
+            color: white;
+            border: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            height: 50px;
+            width: 40%;
+            border-radius: 5px;
+            margin: 4%;
+        }
+
+
+/* 전체 div  */
+.center__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: 1px solid gray;
+  margin: 20px 0;
+  padding: 30px 0;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+}
+/* 내부 박스 로그인박스 */
+.center__container .container__div {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  outline: 1px solid gray;
+}
+
+
+
+/* 내부 공통 */
+.center__container .container__div .common {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+
+/* 내용은 같지만 class명이 다른 css [ login, update_pwd, mem_leave 순서 ]  */
+
+/* 내부 제목 (내 정보 수정) */
+.center__container .container__div .login__title,
+.center__container .container__div .pwd__title,
+.center__container .container__div .leave__title,
+.center__container .container__div .signin__title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* [ update_pwd, mem_leave 순서 ] */
+/* 내부 서브제목 (내정보수정을 희망하신다면~) */
+.center__container .container__div .pwd__sub,
+.center__container .container__div .leave__sub {
+  font-size: 0.8em;
+}
+/* form 박스 */
+.center__container .container__div .pwd__box .box,
+.center__container .container__div .leave__box .box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  outline: 1px solid gray;
+  width: 90%;
+  padding: 20px 0;
+}
+
+/* 비밀번호 입력 박스 css */
+.center__container .container__div .pwd__box .box .input__pwd,
+.center__container .container__div .leave__box .box .input__pwd {
+  margin : 0 0 10px 15px;
+}
+.center__container .container__div .pwd__box .box .input__pwd #box__input,
+.center__container .container__div .leave__box .box .input__pwd #box__input {
+  width: 200px;
+
+}
+.center__container .container__div .pwd__box .box .input__result,
+.center__container .container__div .leave__box .box .input__result {
+  margin : 0 0 10px 15px;
+  font-size: 0.6em;
+  font-style: italic;
+  color: red;
+}
+
+.center__container .container__div .pwd__box .box .btn__box,
+.center__container .container__div .leave__box .box .btn__box {
+  display: flex;
+  justify-content: space-around;
+}
+.center__container .container__div .pwd__box .box .btn,
+.center__container .container__div .leave__box .box .btn {
+  width: 100px;
+  border: none;
+}
+
+
+.ul_ .detail__li .detail__span{
+            flex: 1;
+            /* outline: 1px solid greenyellow; */
+}
+        .ul_ .detail__li .detail__span_index {
+            flex: 2;
+            /* outline: 1px solid turquoise; */
+ }
+
+ /* 회원정보 수정 세부페이지 */
+        .information .info__detail .detail__li{
+             display: flex;
+              margin: 15px;
+              width: 90%;
+        }
+        .information .info__detail {
+            /*outline: 1px solid blue;*/
+        }
+        .information .info__detail .ul_ {
+            /*outline: 1px solid red;*/
+           height: 370px;
+           width: 90%
+        }
+
+        .information .info__detail .ul_ .detail__li .detail__span{
+            flex: 1;
+            /* outline: 1px solid greenyellow; */
+        }
+        .information .info__detail .ul_ .detail__li .detail__span_index {
+            flex: 2;
+            /* outline: 1px solid turquoise; */
+        }
+        /* 여기까지 my_info와 같음 */
+
+        /* .ul_ .detail__li .detail__span_index 개별 스타일 */
+            /* 닉네임 */
+        .ul_ .detail__li .detail__span_index #input__nickname {
+            width: 120px;
+        }
+            /* 닉네임 중복확인 */
+        .ul_ .detail__li .detail__span_index #btn__nick_duplicate {
+            font-size: 0.5em;
+            width: 60px;
+        }
+            /* 전화번호 */
+        .ul_ .detail__li .detail__span_index #tel{
+            width: 30px;
+        }
+            /* sms, email 서비스 상태 text */
+        .ul_ .detail__li .detail__span_index #sms__state,
+        .ul_ .detail__li .detail__span_index #email__state {
+            font-size: 0.6em;
+            font-style: italic;
+            color: red;
+        }
+            /* email input */
+        .ul_ .detail__li .detail__span_index .email {
+            width: 90px;
+        }
+        /* info__detail_bottom */
+        .info__detail .info__detail_bottom {
+            /* outline: 1px solid blue; */
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+
+        }
+        .info__detail .info__detail_bottom #member__leave {
+            font-size: 0.6em;
+        }
+        .info__detail .info__detail_bottom #member__update {
+            margin: 5px;
+            right: 10px;
+        }
+
+        .width--67 {
+            width: 67%;
+        }
+
+
+.gloErr {
+  font-size:0.8em;
+  font-weight:bold;
+  color:red;
+}
+
+.errmsg {
+  font-size:0.8em;
+  font-weight:bold;
+  color:red;
+}
+ul {
+  margin:5px;padding:0
+}
+.errmsg li {
+  margin:5px;
+}
+ul,li{
+  text-decoration:none;
+  display:block;
+  width:250px
+}
+.fieldError{
+  color:red;
+}
+.fieldSuccess{
+  border:1px solid green;
+  color:green;
+}
+
+/*내 정보 수정 에러 안내*/
+.info__detail .ul_ .errmsg {
+    padding-left: 34%;
+}

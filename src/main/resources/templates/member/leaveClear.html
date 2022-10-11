@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{::link},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>울산한마당 | 탈퇴완료</title>
+  <link rel="stylesheet" href="../../static/css/member/leave_Clear.css" th:href="@{/css/member/leave_Clear.css}">
+</head>
+
+<body>
+<div id="wrapper">
+  <div class="upperHeader">
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::lowerHeader}"></th:block>
+  </div>
+
+
+  <!-- ======================================================================================================            -->
+  <main id="leaveMemberMain">
+    <div class="container">
+      <!-- <div class="info__title">
+        <h2 id="title">회원 탈퇴</h2>
+      </div> -->
+      <!--이미지 안내 배너-->
+      <div class="image_banner">
+        <div class="image_banner_in_box" style="width: 100%;">
+          <h2 style="font-weight: bold;">회원탈퇴</h2>
+        </div>
+      </div>
+
+      <div class="center__container">
+        <div class="container__div">
+          <span class="common leave__title">회원 탈퇴 완료</span>
+          <div class="leaveMember__box">
+<!--            <h2>탈퇴완료</h2>-->
+            <div class style="text-align: center;">탈퇴가 완료되었습니다.</div>
+            <div class="leaveClear__btn">
+              <button id="leaveClearBtn"><a th:href="@{/}">홈으로 돌아가기</a></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- ======================================================================================================            -->
+
+
+</div>
+</body>
+</html>

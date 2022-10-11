@@ -1,0 +1,103 @@
+@charset "utf-8";
+*{
+  outline: 0;
+}
+
+main { 
+  display:flex; 
+  justify-content:center; 
+}
+
+.post-wrap * {
+  /* outline:1px solid red; */
+  box-sizing: border-box;
+}
+
+.post-wrap {
+  width:80% 
+}
+/* 
+.post-wrap .post-hit{
+  display: flex;
+  justify-content: end;
+}
+.post-wrap .post-hit .post-hit-content{
+  width:50px;
+  font-weight: bold;
+} */
+
+/* .post-wrap .post-hit .post-hit-content.post-hit-cnt{
+  text-align: right;
+} */
+
+.post-wrap .post-title {
+  text-align: center;
+  padding:50px 0;
+}
+
+.post-wrap .post-content,
+.post-wrap .post-attach{
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 5px;
+}
+
+
+.post-wrap .post-content .w130{
+  width:130px;
+  padding:3px;
+  border:1px solid #ccc;
+}
+
+.post-wrap .post-content .w100{
+  width:100%;
+  padding:3px;
+  /* border:1px solid #ccc; */
+
+}
+
+.post-wrap .post-btngrp{
+  display:flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+
+.post-btngrp #cancelBtn{
+  background-color: #ff6d00;
+  color: white;
+  margin-right: 20px;
+  border-radius: 5px;
+  border: none;
+  width: 100px;
+  height: 30px;
+  width: 70px;
+}
+
+.post-btngrp #saveBtn{
+  background-color: white;
+  color: #ff6d00;
+  border-radius: 5px;
+  border: 1px solid #ff6d00;
+  width: 100px;
+  height: 30px;
+  width: 70px;
+
+}
+
+
+.post-wrap .post-attach .fa-solid.fa-trash-can {
+   cursor:pointer;
+}
+
+.post-wrap .post-attach .fa-solid.fa-trash-can:hover{
+   color:red;
+}
+
+/* ckeditor style 지정 */
+#bcontent {display:none;}
+.post-wrap .ck-editor__editable{
+  border: 0;
+    min-height: 30rem;
+    max-height: 30rem;
+  }

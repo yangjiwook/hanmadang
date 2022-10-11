@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{::link},                        <!--/* styles */-->
+        ~{::script},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+  <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+  <meta name="author" content="KH java 할수있조">
+  <title>수정</title>
+  <script defer th:src="@{/js/common/ckeditor.js}"></script>
+  <script defer src="" th:src="@{/js/post/editForm.js}"></script>
+  <link rel="stylesheet" href="" th:href="@{/css/post/editForm.css}">
+  <script src="https://kit.fontawesome.com/904a346929.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="wrapper">
+  <div class="upperHeader">
+    <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::nav}"></th:block>
+  </div>
+
+
+  <!-- =============================================         -->
+  <main>
+    <div class="post-wrap" th:data-code="${category}">
+      <!-- <div class="post-title"><h3>게시글 수정</h3></div> -->
+      <div class="post-title"><h3>후기 게시판</h3></div>
+      <div class="class-body" >
+        <form id="editForm" action="" th:action="@{|/post/*{postId}/edit|}" method="post"
+              th:object="${editForm}" enctype="multipart/form-data">
+          <input type="hidden" th:field="*{postId}">
+          <input type="hidden" th:field="*{email}">
+          <input type="hidden" th:field="*{nickname}">
+          <!-- <div class="post-hit">
+            <span class="post-hit-content post-hit-tit">조회수</span>
+            <span class="post-hit-content post-hit-cnt" th:text="*{hit}">10</span>
+          </div> -->
+          <div class="post-content">
+            <div><lable>카테고리</lable></div>
+            <div>
+              <select name="" id="" class="w130" th:field="*{pcategory}">
+                <option value="" >==선택==</option>
+                <th:block th:each="code : ${classifier}">
+                  <option value="" th:value="${code.code}" th:text="${code.decode}">게시판1</option>
+                </th:block>
+              </select>
+              <div class="fieldError" th:errors="*{pcategory}"></div>
+            </div>
+            <th:block th:if="${category} == B0102">
+              <div><lable>시작일</lable></div>
+              <div>
+                <input type="date" name="" id="" class="w130" >
+                <div class="fieldError" ></div>
+              </div>
+            </th:block>
+            <th:block th:if="${category} == B0102">
+              <div><lable>마감일</lable></div>
+              <div>
+                <input type="date" name="" id="" class="w130" >
+                <div class="fieldError" ></div>
+              </div>
+            </th:block>
+
+            <th:block th:if="${category} == B0103">
+              <div><lable>관람일시</lable></div>
+              <div>
+                <input type="date" name="" id="" class="w130" >
+                <div class="fieldError" ></div>
+              </div>
+            </th:block>
+            <th:block th:if="${category} == B0103">
+              <div><lable>제목</lable></div>
+              <div>
+                <select name="" id="" class="w100" th:field="*{title}">
+                  <option value="" >==선택==</option>
+                  <th:block th:each="code : ${classifier}">
+                    <option value="" th:value="${code.code}" th:text="${code.decode}">가을음악회</option>
+                  </th:block>
+                </select>
+                <div class="fieldError" th:errors="*{title}"></div>
+              </div>
+            </th:block>
+            <th:block th:if="${category} == B0102">
+              <div><lable>제목</lable></div>
+              <div>
+                <input type="text" name="" id="" class="w100"th:field="*{title}" >
+                <div class="fieldError" ></div>
+              </div>
+            </th:block>
+            <div><lable>작성자</lable></div>
+            <div><span th:text="|*{nickname} ( *{email} )|"></span></div>
+            <div><lable>내용</lable></div>
+            <div>
+              <textarea name="" id="" rows="10" class="w100" th:field="*{pcontent}">
+                <div th:each="file : ${attachFiles}">
+                  <th:block th:if="${#strings.contains(file.ftype,'image')}" >
+                    <img th:src="@{|/attach/view/${file.uploadfileId}|}" >
+                  </th:block>
+                </div>
+              </textarea>
+
+              <div class="fieldError" th:errors="*{pcontent}"></div>
+            </div>
+            <div><lable>첨부</lable></div>
+            <div><input type="file" name="" id="" class="w100" th:field="*{files}" multiple></div>
+            <div class="post-attach">
+              <div><label>&nbsp;</label></div>
+              <div id="attachFiles">
+                <div class="attachFile" th:each="file : ${attachFiles}">
+                  <a href="" th:href="@{|/attach/down/${file.uploadfileId}|}" th:text="${file.upload_filename}"></a>
+                  <i class="fa-solid fa-trash-can" th:data-fid="${file.uploadfileId}"></i>
+                  <th:block th:if="${#strings.contains(file.ftype,'image')}" >
+                    <img th:src="@{|/attach/view/${file.uploadfileId}|}" th:width="30px" th:height="30px">
+                  </th:block>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="post-btngrp">
+            <button type="button" id="cancelBtn">취소</button>
+            <button type="button" id="saveBtn">저장</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+  <!--end main -->
+
+
+</div>
+</body>
+</html>

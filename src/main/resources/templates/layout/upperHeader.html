@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<th:block th:fragment="upperHeaders">
+  <!-- <header id="mainHeader"> -->
+  <!-- 로그인 하기 이전 Header layout -->
+  <div id="colorbox"></div>
+  <!--탑/메뉴-->
+  <div id="uppermost">
+    <!-- 비로그인 Header layout -->
+    <div class="content content-upm" th:if="${session.isEmpty()}">
+      <div class="logo"><h1 style="font-family: 'ulsanjunggu"><a  th:href="@{/}">울산 한마당</a></h1></div>
+      <div class="login"><a th:href="@{/login}">로그인</a><span class="interval">|</span><a th:href="@{/members/sign_in}">회원가입</a></div>
+    </div>
+
+    <!-- 로그인 Header layout -->
+    <div class="content content-upm" th:unless="${session.isEmpty()}">
+      <div class="logo"><h1 style="font-family: 'ulsanjunggu"><a  th:href="@{/}">울산 한마당</a></h1></div>
+      <div class="header_info_logout">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+        </svg>
+        <span th:text="|${session.LoginMember.nickname} 님|"></span>
+        <a id="sign" href="#" th:href="@{/members/{email}/info(email=${s_email})}">내정보</a><span class="interval"/>
+        <a id="log" href="logout.html" th:href="@{/logout}">로그아웃</a>
+      </div>
+    </div>
+  </div>
+
+</th:block>
+
+
+
+<th:block th:fragment="afterUpperHeader">
+  <!-- <header id="mainHeader"> -->
+  <!-- 로그인 한 후 Header layout -->
+  <div id="colorbox2"></div>
+  <div id="uppermost2">
+
+  </div>
+
+
+</th:block>
+
+
+
+</html>

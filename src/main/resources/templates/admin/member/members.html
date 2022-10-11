@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원 전체조회</title>
+  <style>
+    .first-row{
+      background-Color:yellow;
+    }
+  </style>
+</head>
+
+<body>
+<h3>회원 전체 조회</h3>
+<hr>
+<!--<div>[[${memberAll}]]</div>-->
+<table>
+  <thead>
+  <tr>
+    <th>NO</th>
+    <th>내부ID</th>
+    <th>회원아이디</th>
+    <th>비밀번호</th>
+    <th>별칭</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="member : ${memberAll}">
+    <th:block th:if="${memberStat.first}">
+      <td class="first-row" th:text="${memberStat.count}"></td>
+      <td class="first-row" th:text="${member.memberId}"></td>
+      <td class="first-row" ><a th:href="@{|/admin/members/${member.email}/|}" th:text="${member.email}"></a></td>
+      <td class="first-row" th:text="${member.passwd}"></td>
+      <td class="first-row" th:text="${member.nickname}"></td>
+    </th:block>
+    <th:block th:unless="${memberStat.first}">
+      <td th:text="${memberStat.count}"></td>
+      <td th:text="${member.memberId}"></td>
+      <td> <a th:href="@{|/admin/members/${member.email}/|}" th:text="${member.email}"></a></td>
+      <td th:text="${member.passwd}"></td>
+      <td th:text="${member.nickname}"></td>
+    </th:block>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

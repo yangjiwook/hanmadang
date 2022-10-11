@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+main { display:flex; justify-content:center; }
+
+post-wrap * {
+  /* outline:1px solid red;*/
+  box-sizing: border-box;
+}
+
+
+/*공연 목록*/
+.gallery {
+ padding: 1rem 1rem 1rem 1rem;
+ display: grid;
+ grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.contents__list {
+    text-align: center;
+}
+
+.contents__item {
+    height: 180px;
+}
+
+.contents__list figure img {
+    width: 200px;
+    height: 250px;
+    object-fit: cover;
+  }
+
+
+.post-wrap { width:70% }
+
+.post-wrap .post-title {
+  text-align: left; padding:20px 0;
+}
+
+.post-wrap .post-content table{
+  width:100%;
+  border:1px solid #333;
+  border-collapse: collapse;
+}
+
+.post-wrap .post-content table th,
+.post-wrap .post-content table td{
+  border:1px solid #333;
+  padding:3px;
+}
+
+.post-wrap .post-content table>thead>tr>th:nth-child(2){
+  width:50%;
+}
+
+.post-wrap .post-content table>tbody>tr>td:first-child,
+.post-wrap .post-content table>tbody>tr>td:last-child{
+  text-align: right;
+}
+
+.post-wrap .post-btngrp{
+  display:flex;
+  justify-content: flex-end;
+}
+
+.post-wrap .post-page{
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.post-wrap .post-page .post-page-item{
+  display:inline-block;
+  width:24px;
+  height:24px;
+  padding:2px;
+  text-align: center;
+}
+
+.post-wrap .post-page .post-page-item.active{
+  background-color:#333;
+  color:white;
+}
+
+.post-wrap .post-search{
+  display: flex;
+  justify-content: center;
+}
+
+i.fa-solid.fa-reply{
+  /*color:pink;*/
+}
+

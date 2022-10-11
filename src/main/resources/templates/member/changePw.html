@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{::link},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>울산한마당 | 아이디 찾기</title>
+  <link rel="stylesheet" href="../../static/css/member/changePw.css" th:href="@{/css/member/changePw.css}">
+  <script src="https://kit.fontawesome.com/904a346929.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div id="wrapper">
+  <div class="upperHeader">
+    <th:block th:replace="~{layout/upperHeader::beforeUpperHeader}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::lowerHeader}"></th:block>
+  </div>
+
+  <!-- ======================================================================================================            -->
+  <main id="changePwMain">
+    <div class="container">
+      <!-- <div class="info__title">
+        <h2 id="title">아이디 찾기</h2>
+      </div> -->
+
+
+<!--이미지 안내 배너-->
+<div class="image_banner">
+  <div class="image_banner_in_box" style="width: 100%;">
+    <h3 style="font-weight: bold;">비밀번호 찾기</h3>
+  </div>
+</div>
+
+
+
+
+<div class="center__container">
+  <div class="container__div">
+    <!-- <span class="common findEmail__title">아이디 찾기 화면</span> -->
+    <div class="common changePw__box">
+      <form action="" class="box" th:method="post">
+        <div class="changePw__text_box">   
+          <ul>
+            <li>
+              <i class="fa-solid fa-unlock-keyhole fa-3x"></i>
+              <p> test1@test.com 님 </p>            
+              <p> 이제 새로운 비밀번호로 설정해 주세요. </p>    
+            </li>
+          </ul>
+          </div>
+        <div class="changePw__Pw_box">
+          <h5>비밀번호</h5>
+          <input type="text">
+        </div>
+      <div class="changePw__rePw_box">
+        <h5>비밀번호 확인</h5>
+        <input type="text" >
+      </div>
+      <!-- <div class="content-findEmail">
+        <div><label>찾으려는 아이디의 닉네임</label></div>
+        <div><input type="text" id="nickname"></div>
+        <div><label>아이디</label></div>
+        <div><span id="findedEmail"></span></div>
+        <div></div><div> -->
+          <div class="changePw__btn">
+          <button id="chgPwBtn">등록</button>
+        </div>
+        </form>
+        </div>
+      </div>
+    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- ======================================================================================================            -->
+</div>
+
+
+  <script>
+    findEmailBtn.addEventListener('click', findByEmail);
+
+    function findByEmail(e){
+      // AJAX 객체생성
+      const xhr = new XMLHttpRequest();
+
+      //클라이언트 요청
+      xhr.open('PUT','/api/members/email/find');
+      xhr.send(nickname.value);
+
+      //서버 응답처리
+      xhr.addEventListener('load',e=>{
+        //console.log(xhr);
+        if(xhr.status === 200){
+          //console.log(xhr.response); //json포맷의 문자열 수신확인
+          const obj = JSON.parse(xhr.response);//json포맷의 문자열 => js객체변환
+          if(obj.rtcd === '00'){
+            findedEmail.textContent = obj.data;
+          }else{
+            findedEmail.textContent = obj.data;
+          }
+        }else{
+          console.err('Error', xhr.status, xhr.statusText);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

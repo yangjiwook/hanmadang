@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{::link},                        <!--/* styles */-->
+        ~{::script},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{::script},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+  <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+  <meta name="author" content="KH java 할수있조">
+  <title>게시글 작성</title>
+  <script defer th:src="@{/js/common/ckeditor.js}"></script>
+  <script defer src="" th:src="@{/js/post/addForm.js}"></script>
+  <link rel="stylesheet" href="../../static/css/post/addForm.css" th:href="@{/css/post/addForm.css}">
+
+</head>
+<body>
+<div class="wrapper">
+  <div class="upperHeader">
+    <!--  layout/upperHeader가 경로인 파일의 beforeUpperHeader 조각을 replace 한다    -->
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::nav}"></th:block>
+  </div>
+
+
+  <!-- =============================================         -->
+  <main>
+    <div class="post-wrap" th:data-code="${category}">
+      <!-- <div class="post-content" th:if="${list} and (${category} == B0102 or ${category} == B0103)"> -->
+<!--      <div class="post-title"><h3>후기 게시판</h3></div>-->
+      <div class="post-title" ><h3 th:text="${postTitle['__${category}__']}?:_"></h3></div>
+      <div class="class-body">
+        <form id="writeForm" action="" method="post" th:object="${addForm}" enctype="multipart/form-data">
+          <input type="hidden" th:field="*{email}">
+          <input type="hidden" th:field="*{nickname}">
+          <input type="hidden" th:field="*{pcategory}">
+          <div class="post-content">
+            
+            <th:block th:if="${category} == B0103">
+              <div><lable>관람일시</lable></div>
+              <div>
+                <input type="date" name="" id="dDay" class="w130">
+                <div class="fieldError" ></div>
+              </div>
+              <div><lable>관람공연</lable></div>
+              <div>
+                <!---------------------------------------------------------->
+                <select name="" id="sawEventSelect" class="w100">
+                  <option value="" >==선택==</option>
+
+<!--                  <th:block id="sawEvent" th:each="">-->
+                  <option id="sawEvent" value=""></option>
+<!--                  </th:block>-->
+                </select>
+                <div class="fieldError"></div>
+              </div>
+            </th:block>
+            <th:block th:if="${category} == B0102">
+              <div><label>시작일시</label></div>
+              <div>
+                <input type="date" name="" th:field="*{promotion.adStartDay}" class="w130">
+              </div>
+              <div><label for="">마감일시</label></div>
+              <div>
+                <input type="date" name="" th:field="*{promotion.adEndDay}" class="w130">
+              </div>
+              <div><label for="">참가비용</label></div>
+              <div><input type="text" th:field="*{promotion.entFee}" class="w130"></div>
+            </th:block>
+<!--           --------------------------------------------------------->
+            <div><label for="">제목</label></div>
+            <div><input type="text" class="w100" th:field="*{title}"></div>
+
+            <div><lable>작성자</lable></div>
+            <div>
+              <!--              <span th:text="|*{nickname} ( *{email} )|" th:field="*{email,nickname}"></span></div>-->
+              <input type="text"  th:field="*{nickname}" class="writer" readonly>
+              <input type="text" th:field="*{email}" class="writer" readonly>
+            </div>
+            <div><lable>내용</lable></div>
+            <div>
+              <textarea name="" id="" rows="10" class="w100" th:field="*{pcontent}"></textarea>
+              <div class="fieldError" th:errors="*{pcontent}"></div>
+            </div>
+            <div><lable>첨부</lable></div>
+            <div><input type="file" name="" id="" class="w100" th:field="*{files}" multiple></div>
+          </div>
+        </form>
+      </div>
+      <div class="post-btngrp">
+        <button type="button" id="writeBtn">등록</button>
+        <button type="button" id="listBtn" >목록</button>
+      </div>
+    </div>
+  </main>
+  <!--end main -->
+
+
+</div>
+</body>
+</html>

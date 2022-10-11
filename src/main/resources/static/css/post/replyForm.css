@@ -1,0 +1,26 @@
+@charset "utf-8";
+main { display:flex; justify-content:center; }
+.post-wrap * {
+  /* outline:1px solid red; */
+  box-sizing: border-box;
+}
+.post-wrap { width:80% }
+.post-wrap .post-title {
+  text-align: center; padding:20px 0;
+}
+.post-wrap .post-content{
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 5px;
+}
+.post-wrap .post-content .w100{
+  width:100%; padding:3px;
+}
+.post-wrap .post-btngrp{
+  display:flex;
+  justify-content: flex-end;
+}
+
+/* ckeditor style 지정 */
+#bcontent {display:none;}
+.post-wrap .ck-editor__editable{min-height:20rem;}

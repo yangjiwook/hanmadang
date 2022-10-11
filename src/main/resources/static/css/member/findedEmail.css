@@ -1,0 +1,100 @@
+  #findedEmailMain .container .center__container{
+            outline: 0;
+             height: 50%;
+            /* outline: 1px solid red; */
+            padding-top: 0;
+            margin-top: 0;
+  }
+
+
+
+  #findedEmailMain .container .center__container .container__div{
+    /* outline: 1px solid #ccc; */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+  }
+        
+
+        
+        .center__container .container__div .findedEmail__box .box{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* outline: 1px solid gray; */
+            width: 90%;
+            position: relative;
+        }
+
+
+        .findedEmail__box h6{
+          padding-bottom: 10px;
+          border-bottom: 2px solid gray;
+          font-weight: bold;
+        }
+
+     
+        .findedEmail__Email_box{
+          margin: 20px 0;
+          width: 100%;     
+          display: flex;
+          outline: 1px solid #ccc;
+          padding: 50px;
+          border-radius: 8px;
+          margin: 40px 0 20px 0;
+        }
+        
+        
+        
+        .findedEmail__Email_box li{
+          display: flex;
+          margin-bottom: 10px;
+        }
+        
+        .findedEmail__Email_box input{
+          margin-right: 10px;
+        }
+        
+        
+        .findedEmail__Email_box li p{
+          padding-right: 10px;
+          
+        }
+
+
+
+
+        
+       
+
+        .findedEmail__btn {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 15px 0;
+        }
+
+        .findedEmail__btn #logInBtn {
+            background-color: #ff6d00;
+            color: white;
+            border: none;
+            font-weight: bold;
+            height: 40px;
+            width: 40%;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+
+
+        .findedEmail__btn #findPwBtn {
+          background-color: white;
+          color: #ff6d00;
+          outline:1px solid #ff6d00;
+          font-weight: bold;
+          height: 40px;
+          width: 40%;
+          border-radius: 5px;
+          border: none;
+        }
+
+
+

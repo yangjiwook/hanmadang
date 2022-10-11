@@ -1,0 +1,10 @@
+@charset "utf-8";
+/*noto sans kr*/
+@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Noto+Sans+KR:wght@400;500&family=Roboto:ital,wght@0,400;1,500&display=swap');
+/*울산중구서체*/
+@font-face {
+    font-family: 'ulsanjunggu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ulsanjunggu.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

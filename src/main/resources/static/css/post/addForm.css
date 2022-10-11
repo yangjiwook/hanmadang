@@ -1,0 +1,124 @@
+@charset "utf-8";
+
+*{
+  outline: 0;
+}
+
+
+main { 
+  display:flex; 
+  justify-content:center; 
+}
+
+/* .post-wrap * {
+  /* outline:1px solid red; 
+  box-sizing: border-box;
+  outline: 0;
+} */
+
+.post-wrap {
+  width:60%
+}
+
+.post-wrap .post-title {
+  text-align: center; 
+  padding:50px 0;
+  font-weight: bold;
+
+}
+
+.post-wrap .post-content{
+  display: grid;
+  grid-template-columns: 100px 1fr ;
+  gap: 10px;
+  /* flex-direction: column; */
+}
+
+
+.post-wrap .post-content > div > label{
+  /* outline: 1px solid red; */
+}
+
+.post-wrap .post-content .w130{
+  width:130px; 
+  padding:3px;
+}
+
+
+
+.post-wrap .post-content .w100{
+  width:100%; padding:3px;
+}
+
+
+.writer{
+  border: 0;
+}
+
+
+.writer:nth-child(1){
+  width: 18%;
+}
+
+
+
+
+textarea{
+  overflow-y: scroll;
+}
+
+
+.post-wrap .post-btngrp{
+  display:flex;
+  justify-content: center;
+  margin: 30px 0;
+  border: 0;
+}
+
+
+.post-wrap .post-btngrp #writeBtn{
+  background-color: #ff6d00;
+  color: white;
+  margin-right: 20px;
+  border-radius: 5px;
+  border: none;
+  width: 70px;
+  height: 30px;
+  
+}
+
+.post-wrap .post-btngrp #listBtn{
+  background-color: white;
+  color: #ff6d00;
+  border-radius: 5px;
+  border: 1px solid #ff6d00;
+  width: 70px;
+  height: 30px;
+
+}
+
+
+/* ckeditor style 지정 */
+
+#bcontent {
+  display:none;
+}
+
+.post-wrap .ck-editor__editable{
+  /* min-height:20rem; */
+  /* max-height: 400px; */
+  border: 0;
+    min-height: 30rem;
+    max-height: 30rem;
+}
+
+
+
+/* 
+.ck-editor__editable {
+  max-height: 400px;
+}
+
+.ck-editor__main{
+  overflow-y: scroll;
+} */

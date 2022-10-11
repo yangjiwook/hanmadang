@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{::style},                        <!--/* style */-->
+        ~{::script},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},                  <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                           <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+  <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+  <meta name="author" content="KH java 할수있조">
+  <title>울산한마당 | 활동 내역</title>
+
+  <style>
+
+        /* 외부 div 공통 */
+        .information .info__detail .index {
+            padding: 10px;
+            margin: 10px;
+        }
+        /* 타이틀 이름 */
+        .information .info__detail .sub_title {
+            font-size: 1.2em;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(187, 187, 187, 0.521);
+        }
+
+        /* 홍보글 css */
+        .information .info__detail .my__list {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            /* outline: 1px solid orange; */
+        }
+        .information .info__detail .my__list .board__type {
+            margin-bottom: 10px;
+        }
+        .information .info__detail .my__list .board__style {
+            border: 1px solid rgba(187, 187, 187, 0.521);
+            border-radius: 5px;
+            padding: 3px;
+            display: flex;
+            background: var(--color-sub);
+        }
+        .information .info__detail .my__list .like__list {
+            border: 1px solid rgba(187, 187, 187, 0.521);
+            border-radius: 5px;
+            padding: 3px;
+            display: flex;
+        }
+        .information .info__detail .my__list .board__style .list__thum,
+        .information .info__detail .my__list .like__list .list__thum {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .information .info__detail .my__list .board__style .list__title,
+        .information .info__detail .my__list .like__list .list__title {
+            flex: 4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .information .info__detail .my__list .board__style .list__date,
+        .information .info__detail .my__list .like__list .list__date {
+            flex: 1.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .information .info__detail .my__list .board__style .list__state,
+        .information .info__detail .my__list .like__list .list__state {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .information .info__detail .my__list .board__style .list__number,
+        .information .info__detail .my__list .like__list .list__number {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .information .info__detail .my__list .board__style .list__like,
+        .information .info__detail .my__list .like__list .list__like {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+  </style>
+</head>
+<body>
+<div id="wrapper">
+  <div class="upperHeader">
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::lowerHeader}"></th:block>
+  </div>
+
+  <main id="commentMain">
+    <div class="container">
+      <!--      <div class="info__title">-->
+      <!--        <h2 id="title">내 정보</h2>-->
+      <!--      </div>-->
+
+      <!--      <div class="info__state">-->
+      <!--        <h3 id="state">활동내역</h3>-->
+      <!--      </div>-->
+      <!--이미지 안내 배너-->
+      <div class="image_banner_my_info">
+        <div class="image_banner_in_box_my_info" style="width: 100%;">
+          <h2 style="font-weight: bold;">활동내역</h2>
+        </div>
+      </div>
+
+      <div class="information">
+        <div class="info__index info__list">
+          <div class="list__title">
+            <div class="info__box">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-emoji-kiss" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M12.493 13.368a7 7 0 1 1 2.489-4.858c.344.033.68.147.975.328a8 8 0 1 0-2.654 5.152 8.58 8.58 0 0 1-.81-.622Zm-3.731-3.22a13 13 0 0 0-1.107.318.5.5 0 1 1-.31-.95c.38-.125.802-.254 1.192-.343.37-.086.78-.153 1.103-.108.16.022.394.085.561.286.188.226.187.497.131.705a1.892 1.892 0 0 1-.31.593c-.077.107-.168.22-.275.343.107.124.199.24.276.347.142.197.256.397.31.595.055.208.056.479-.132.706-.168.2-.404.262-.563.284-.323.043-.733-.027-1.102-.113a14.87 14.87 0 0 1-1.191-.345.5.5 0 1 1 .31-.95c.371.12.761.24 1.109.321.176.041.325.069.446.084a5.609 5.609 0 0 0-.502-.584.5.5 0 0 1 .002-.695 5.52 5.52 0 0 0 .5-.577 4.465 4.465 0 0 0-.448.082Zm.766-.087-.003-.001-.003-.001c.004 0 .006.002.006.002Zm.002 1.867-.006.001a.038.038 0 0 1 .006-.002ZM6 8c.552 0 1-.672 1-1.5S6.552 5 6 5s-1 .672-1 1.5S5.448 8 6 8Zm2.757-.563a.5.5 0 0 0 .68-.194.934.934 0 0 1 .813-.493c.339 0 .645.19.813.493a.5.5 0 0 0 .874-.486A1.934 1.934 0 0 0 10.25 5.75c-.73 0-1.356.412-1.687 1.007a.5.5 0 0 0 .194.68ZM14 9.828c1.11-1.14 3.884.856 0 3.422-3.884-2.566-1.11-4.562 0-3.421Z"/>
+              </svg>
+              </svg>
+            </div>
+            <a>안녕하세요.</a>
+            <span th:if="${!session.isEmpty()}" th:text="|${session.LoginMember.nickname} 님|"></span>
+            <span style="color: silver;" th:if="${!session.isEmpty()}" th:text="${s_email}"></span>
+            <!--            <p>목록</p>-->
+          </div>
+
+          <th:block th:replace="~{layout/nav::infoMenu}"></th:block>
+        </div>
+        <!-- ========= start content ========= -->
+
+        <div class="info__index info__detail">
+          <div class="index sub_title">좋아요 목록</div>
+          <div class="index my__list">
+            <div class="board__style">
+              <div class="list__number">글번호</div>
+              <div class="list__thum">표지</div>
+              <div class="list__title">제목</div>
+              <div class="list__date">진행일자</div>
+              <div class="list__state">상태</div>
+              <div class="list__like"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              </svg></div>
+            </div>
+            <div class="like__list">
+              <div class="list__number">9122</div>
+              <div class="list__thum"><img
+                  src="https://cdn.pixabay.com/photo/2015/09/04/23/00/vintage-922963_960_720.jpg" alt=""
+                  style="height:100px;width:60px"></div>
+              <div class="list__title">공연전시</div>
+              <div class="list__date">2022-09-22</div>
+              <div class="list__state">진행예정</div>
+              <div class="list__like"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              </svg></div>
+            </div>
+          </div>
+        </div>
+        <!-- ========= end content ========= -->
+      </div>
+    </div>
+  </main>
+
+</div>
+<script>
+  //클릭한 요소의 글 번호 추출
+  const $list_box = document.querySelectorAll('.like__list > div');
+
+  Array.from($list_box).forEach((ele, index)=>{
+      ele.onclick = () => {
+          // 해당 클릭 요소의 부모를 찾고 부모의 하위 요소 중 글번호(list__number)를 찾음
+          const list_number = ele.parentNode.querySelector('.list__number');
+          // list__number 찾고 이를 통해 SQL 데이터베이스의 글 번호의 URL 주소를 찾아 해당 페이지로 이동
+          console.log(list_number.innerHTML);
+      }
+  });
+</script>
+</body>
+</html>

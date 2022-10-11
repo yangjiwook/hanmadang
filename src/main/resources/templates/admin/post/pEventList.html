@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시물</title>
+  <style>
+    table tbody tr td {
+      font-size: 0.6rem;
+      text-align: center;
+    }
+    .odd_row__color {
+      background-color: rgb(206, 206, 206);
+    }
+  </style>
+</head>
+
+<body>
+
+<h3>등록공연목록</h3>
+<hr>
+<table>
+  <colgroup>
+    <col><col><col><col><col>
+  </colgroup>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>공연명</th>
+    <th>시작일</th>
+    <th>마감일</th>
+    <th>공연장</th>
+    <th>공연장번호</th>
+    <!--    <th>출연진</th>-->
+    <th>런타임</th>
+    <th>연령</th>
+    <th>가격</th>
+    <th>장르</th>
+    <th>상태</th>
+<!--    <th>상태</th>-->
+    <th>공연시간</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <!--mt20id,prfnm,prfpdfrom,prfpdto,fcltynm,prfcast,prfruntime,-->
+  <!--prfage,pcseguidance,genrenm,prfstate,dtguidance-->
+  <tr th:each="rec :${list}" th:data-event-id="${rec.fcltynm}" th:class="${recStat.odd} ? odd_row__color">
+    <td>[[${rec.mt20id}]]</td>
+    <td>[[${rec.prfnm}]]</td>
+    <td>[[${rec.prfpdfrom}]]</td>
+    <td>[[${rec.prfpdto}]]</td>
+    <td>[[${rec.fcltynm}]]</td>
+    <td>[[${rec.mt10id}]]</td>
+    <!--    <td>[[${rec.prfcast}]]</td>-->
+    <td>[[${rec.prfruntime}]]</td>
+    <td>[[${rec.prfage}]]</td>
+    <td>[[${rec.pcseguidance}]]</td>
+    <td>[[${rec.genrenm}]]</td>
+    <td>[[${rec.prfstate}]]</td>
+    <td>[[${rec.dtguidance}]]</td>
+<!--    <td>[[${rec.sty}]]</td>-->
+  </tr>
+
+  </tbody>
+
+</table>
+
+
+<script>
+      const $tbody = document.querySelector("table tbody");
+
+      $tbody.addEventListener('click', e => {
+
+        if (e.target.tagName == 'TD') {
+          console.log(e.target.parentElement.dataset.eventId);
+
+          const place = e.target.parentElement.dataset.eventId;
+          // 여기서 클릭한 정보를 가져가서 해당 정보를 findbyid 형태로 페이지 전환하여 지도 생성?
+          // location.href =  `/admin/posts/${place}`;
+        }
+      });
+
+
+  </script>
+</body>
+</html>

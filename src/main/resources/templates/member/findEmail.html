@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{::link},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{::script},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.nav},          <!--/* nav */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>울산한마당 | 아이디 찾기</title>
+  <link rel="stylesheet" href="../../static/css/member/findEmail.css" th:href="@{/css/member/findEmail.css}">
+
+
+
+</head>
+
+<body>
+<div id="wrapper">
+  <div class="upperHeader">
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="nav">
+    <th:block th:replace="~{layout/nav::lowerHeader}"></th:block>
+  </div>
+
+  <!-- ======================================================================================================            -->
+  <main id="findEmailMain">
+    <div class="container">
+      <!-- <div class="info__title">
+        <h2 id="title">아이디 찾기</h2>
+      </div> -->
+
+
+      <!--이미지 안내 배너-->
+      <div class="image_banner">
+        <div class="image_banner_in_box" style="width: 100%;">
+          <h3 style="font-weight: bold;">아이디 찾기</h3>
+        </div>
+      </div>
+
+      <!--
+            <div class="info__state">
+              <h3 id="state">아이디 찾기</h3>
+            </div> -->
+
+
+      <div class="center__container">
+        <div class="container__div">
+          <!-- <span class="common findEmail__title">아이디 찾기 화면</span> -->
+          <div class="common findEmail__box">
+            <form action="" class="box" th:method="post">
+              <div class=findEmail__radio_box>
+                <input type="radio" checked="checked">
+                <h5> 회원정보로 등록한 휴대전화로 인증</h5>
+              </div>
+
+
+
+              <div class="findEmail__name_box">
+                <h5>이름</h5>
+                <input type="text">
+              </div>
+              <div class="findEmail__telno_box">
+                <h5>핸드폰번호</h5>
+                <input type="text" placeholder="ex)01012345678" >
+              </div>
+              <!-- <div class="content-findEmail">
+                <div><label>찾으려는 아이디의 닉네임</label></div>
+                <div><input type="text" id="nickname"></div>
+                <div><label>아이디</label></div>
+                <div><span id="findedEmail"></span></div>
+                <div></div><div> -->
+              <div class="findEmail__btn">
+                <button id="findEmailBtn">아이디찾기</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+</main>
+  <!-- ======================================================================================================            -->
+</div>
+
+
+  <script>
+    findEmailBtn.addEventListener('click', findByEmail);
+
+    function findByEmail(e){
+      // AJAX 객체생성
+      const xhr = new XMLHttpRequest();
+
+      //클라이언트 요청
+      xhr.open('PUT','/api/members/email/find');
+      xhr.send(nickname.value);
+
+      //서버 응답처리
+      xhr.addEventListener('load',e=>{
+        //console.log(xhr);
+        if(xhr.status === 200){
+          //console.log(xhr.response); //json포맷의 문자열 수신확인
+          const obj = JSON.parse(xhr.response);//json포맷의 문자열 => js객체변환
+          if(obj.rtcd === '00'){
+            findedEmail.textContent = obj.data;
+          }else{
+            findedEmail.textContent = obj.data;
+          }
+        }else{
+          console.err('Error', xhr.status, xhr.statusText);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

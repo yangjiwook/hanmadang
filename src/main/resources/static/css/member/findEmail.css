@@ -1,0 +1,139 @@
+  #findEmailMain .container .center__container{
+          outline: 0;
+           height: 50%;
+          /* outline: 1px solid red; */
+          padding-top: 0;
+          margin-top: 0;
+  }
+
+
+
+  #findEmailMain .container .center__container .container__div{
+    outline: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+
+  }
+        
+/* 
+  .content-findEmail{
+    display:grid;
+    grid-template-columns: 100px 300px;
+  } */
+
+        
+        .center__container .container__div .findEmail__box .box{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* outline: 1px solid gray; */
+            width: 90%;
+            position: relative;
+        }
+
+     
+        /* 세부 css */
+        .findEmail__radio_box{
+          margin: 20px 0;
+          width: 100%;     
+          display: flex;
+        }
+
+        .findEmail__radio_box input{
+          width: 15px;
+          height: 15px;
+          font-size: 20pt;
+        }
+
+        .findEmail__radio_box h5{
+          font-weight: bold;
+          padding-left: 15px;
+        }
+
+
+        .findEmail__name_box {
+            margin-top: 20px;
+            width: 100%;            
+        }
+
+        .findEmail__name_box h5,
+        .findEmail__telno_box h5{
+          font-weight: bold;
+        }
+
+
+        /* ID(email) input */
+        .findEmail__name_box input {
+            width: 100%;
+            height: 50px;
+            /* border-radius: 30px; */
+            margin-top: 10px;
+            padding: 0px 20px;
+            border: 1px solid #ccc;
+            /* outline: none; */
+        }
+
+        /* PW input */
+        .findEmail__telno_box {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .findEmail__telno_box input {
+            width: 100%;
+            height: 50px;
+            /* border-radius: 30px; */
+            margin-top: 10px;
+            padding: 0px 20px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+       
+
+        .findEmail__btn {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0 15px 0;
+        }
+
+        .findEmail__btn #findEmailBtn {
+            background-color: #ff6d00;
+            color: white;
+            border: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            height: 50px;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* .login__option {
+            display: flex;
+            justify-content: center;
+        }
+
+        .option {
+            margin: 0 5px;
+        }
+
+        .errmsg {
+          font-size:0.8em;
+          font-weight:bold;
+          color:red;
+        }
+        ul {
+          margin:0;padding:0
+        }
+        ul,li{
+          text-decoration:none;
+        }
+        .fieldError{
+          border:1px solid red;
+          color:red;
+        }
+        .fieldSuccess{
+          border:1px solid green;
+          color:green;
+        } */

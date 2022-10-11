@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자</title>
+  <style>
+    tbody tr td {
+        font-size: 00.6rem;
+    }
+  </style>
+</head>
+
+<body>
+<h3>공공데이터요청</h3>
+<hr>
+<table>
+
+  <thead>
+  <tr>
+    <th>공연명</th>
+    <th>시작일</th>
+    <th>마감일</th>
+  </tr>
+  </thead>
+  <tbody id="apiList">
+
+  </tbody>
+</table>
+<div>
+  <button id="pubEventRequestBtn" type="button">요청</button>
+  <button id="allBtn" type="button">목록</button>
+</div>
+<script>
+    allBtn.addEventListener('click', e => {
+        location.href = `/admin/posts/pub/event/list`;
+    });
+
+    pubEventRequestBtn.addEventListener('click', e => {
+
+        const url = 'http://localhost:9080/api/pub/json';
+        document.getElementById('apiList').textContent = '가져오기중...';
+
+        fetch(url, {
+            method:'GET',
+            headers:{
+                'Accept':'application/json'
+            }
+        }).then(res => res.json())
+          .then(res => {
+            console.log(res);
+            const getListTag = pdata => {
+                  return `<tr><td>${pdata.prfnm}</td><td>${pdata.prfpdfrom}</td><td>${pdata.prfpdto}</td></tr>`;
+            };
+            const html = res.map(pdata => getListTag(pdata)).join('');
+            document.getElementById('apiList').innerHTML = html;
+          })
+          .catch(err => console.log(err));
+    });
+  </script>
+</body>
+</html>

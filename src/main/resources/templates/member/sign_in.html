@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout::main(
+        ~{::title},                 <!--/* title */-->
+        <!--/*--------------------------*/-->
+        <!--/*외부파일로 정의시 ex) link css */-->
+        ~{::link},                        <!--/* styles */-->
+        ~{},                        <!--/* scripts */-->
+        <!--/*내부태그로 정의시*/-->
+        ~{},                        <!--/* style */-->
+        ~{::script},                        <!--/* script */-->
+        <!--/*--------------------------*/-->
+        ~{::.upperHeader},          <!--/* upperHeader */-->
+        ~{::.lowerHeader},          <!--/* lowerHeader */-->
+        ~{::main},                  <!--/* main */-->
+        _                          <!--/* footer default*/-->
+      )}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="울산 문화 정보 사이트 메인 화면 기본 문서">
+  <meta name="keywords" content="울산,ulsan,information,홍보,advertisement,이벤트,event">
+  <meta name="author" content="KH java 할수있조">
+  <title>울산한마당 | 회원가입화면</title>
+  <link rel="stylesheet" href="../../static/css/member/sign_in.css" th:href="@{/css/member/sign_in.css}">
+
+
+
+
+</head>
+<body>
+
+<div id="wrapper">
+  <div class="upperHeader">
+    <th:block th:replace="~{layout/upperHeader::upperHeaders}"></th:block>
+  </div>
+  <div class="lowerHeader">
+    <th:block th:replace="~{layout/nav::lowerHeader}"></th:block>
+  </div>
+  <!-- =========================================================================================== -->
+
+  <main id="signInMain">
+
+    <div class="container">
+
+
+      <!--이미지 안내 배너-->
+      <div class="image_banner">
+        <div class="image_banner_in_box" style="width: 100%;">
+          <h3 style="font-weight: bold;">회원가입</h3>
+        </div>
+      </div>
+      <!--
+            <div class="info__state">
+              <h3 id="state">회원 가입</h3>
+            </div> -->
+
+      <div class="center__container">
+        <div class="container__div">
+          <!-- <span class="common signin__title"> 정보 입력</span> -->
+          <div class="signin__box">
+            <form action="/members/sign_in" id="addForm" class="box" method="post" th:object="${addForm}">
+              <fieldset class="box">
+                <table class="join--table">
+                  <tr id="tr_email">
+                    <th rowspan="2"><label for="email">아이디</label></th>
+                    <td>
+                      <input type="text" name="email" id="email" class="one--block" placeholder="example@google.com"
+                             th:field="*{email}" th:class="${#fields.hasErrors('email')} ? fieldError">
+                      <button type="button" id="emailDupChk">중복확인</button>
+                      <div class="errmsg"></div>
+                    </td>
+                  </tr>
+                  <tr id="tr_email_err">
+                    <td>
+                      <ul th:if="${#fields.hasErrors('email')}" th:class="errmsg">
+                        <li th:each="err : ${#fields.errors('email')}" th:text="|${errStat.count}.${err}|"></li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr id="tr_password">
+                    <th rowspan="2"><label for="password">비밀번호</label></th>
+                    <td><input type="text" id="password" class="one--block"
+                               th:field="*{password}" th:class="${#fields.hasErrors('password')} ? fieldError"></td>
+                  </tr>
+                  <tr>
+                    <td id="tr_password_err">
+                      <ul th:if="${#fields.hasErrors('password')}" th:class="errmsg">
+                        <li th:each="err : ${#fields.errors('password')}" th:text="|${errStat.count}.${err}|"/>
+                      </ul>
+                    </td>
+                  </tr>
+                  <!--                  <tr>-->
+                  <!--                    <th rowspan="2"><label for="password_chk"></label>비밀번호 재확인</th>-->
+                  <!--                    <td><input type="text" id="password_chk" class="one&#45;&#45;block"></td>-->
+                  <!--                  </tr>-->
+                  <!--                  <tr>-->
+                  <!--                    <td class="notice notice&#45;&#45;password__check"></td>-->
+                  <!--                  </tr>-->
+
+                  <tr id="tr_name">
+                    <th rowspan="2"><label for="name">이름</label></th>
+                    <td><input type="text" id="name" class="one--block" placeholder="홍길동"
+                               th:field="*{name}" th:class="${#fields.hasErrors('name')} ? fieldError"></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <ul th:if="${#fields.hasErrors('name')}" th:class="errmsg">
+                        <li th:each="err : ${#fields.errors('name')}" th:text="|${errStat.count}.${err}|" >
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr id="tr_nickname">
+                    <th rowspan="2"><label for="nickname">닉네임</label></th>
+                    <td><input type="text" id="nickname" class="one--block"
+                               th:field="*{nickname}" th:class="${#fields.hasErrors('nickname')} ? fieldError">
+                      <!--                      <input type="button" value="중복확인" class="btn nickDupChk">-->
+                    </td>
+                  </tr>
+                  <tr id="tr_nickname_err">
+                    <td>
+                      <ul th:if="${#fields.hasErrors('nickname')}" th:class="errmsg">
+                        <li th:each="err : ${#fields.errors('nickname')}" th:text="|${errStat.count}.${err}|"/>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr id="tr_phone">
+                    <th rowspan="2"><label for="phone">휴대전화</label></th>
+                    <td>
+                      <input type="tel" name="phone--first" class="one--block" id="phone" placeholder="01012345678"
+                             th:field="*{phone}" th:class="${#fields.hasErrors('phone')} ? fieldError">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <ul th:if="${#fields.hasErrors('phone')}" th:class="errmsg">
+                        <li th:each="err : ${#fields.errors('phone')}" th:text="|${errStat.count}.${err}|"/>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th rowspan="5"><label for="birthday">생년월일</label></th>
+                    <td><input type="date" min="1960-01-01" id="birthday"
+                               th:field="*{birthday}" th:class="${#fields.hasErrors('birthday')} ? fieldError"></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <ul th:if="${#fields.hasErrors('birthday')}" th:class="errmsg">
+                        <li th:each="err : ${#fields.errors('birthday')}" th:text="|${errStat.count}.${err}|"/>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="radio" name="gubun" id="M0101" value="M0101" checked="checked">
+                      <label for="M0101">일반회원</label>
+                      <input type="radio" name="gubun" id="M0102" value="M0102">
+                      <label for="M0102">홍보회원</label>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <input type="checkbox" id="sms_service" class=""
+                             th:field="*{sms_service}" th:class="${#fields.hasErrors('sms_service')} ? fieldError">
+                      <label for="">SMS서비스</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="checkbox" id="email_service" class=""
+                             th:field="*{email_service}" th:class="${#fields.hasErrors('email_service')} ? fieldError">
+                      <label for="">이메일서비스</label>
+                    </td>
+                  </tr>
+
+                </table>
+                <div>
+                  <!-- js에서 닉네임중복 버튼 검사 이후 submit -->
+                  <button type="button" id="joinBtn" class="joinBtn">회원가입하기</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script th:inline="javascript">
+  'use strict';
+  //유효성 체크 상태
+  const validChkStatus = {
+    email:false
+  }
+
+  const $email       = document.getElementById('email');
+  const $emailDupChk = document.getElementById('emailDupChk');
+
+
+  $emailDupChk.addEventListener('click', e=>{
+    const $errmsg = $emailDupChk.closest('tr').querySelector('.errmsg');
+    if(!$email.value){
+      $errmsg.textContent = '아이디를 입력하세요';
+      $email.select();$email.focus();
+      return false;
+    }
+
+    const xmlHttpreq = new XMLHttpRequest();
+
+    const url = `/api/members/${$email.value}/exist`;
+    xmlHttpreq.open("GET",url);
+    xmlHttpreq.send();
+
+    xmlHttpreq.addEventListener('load', e=>{
+      if(xmlHttpreq.status ===200){ //성공적으로 서버응답 받으면
+        console.log(xmlHttpreq.response);
+        const result = JSON.parse(xmlHttpreq.response); //Json포맷 문자열 => JS객체로변환
+        console.log(result);
+        const $errmsg = $emailDupChk.closest('tr').querySelector('.errmsg');
+
+        if(result.rtcd === '00'){
+          //alert('이미 사용되고 있는 아이디 입니다.');
+          $errmsg.textContent = '이미 사용되고 있는 아이디 입니다.';
+          $errmsg.style.display = 'block';
+
+        }else{
+          $errmsg.textContent = '';
+          $errmsg.style.display = 'none';
+          $emailDupChk.textContent = '사용가능';
+          $emailDupChk.disabled = 'disabled';
+          $email.readyOnly = 'readyOnly';
+          validChkStatus.email = true;
+        }
+      }else{
+        console.log('Error', xmlHttpreq.status, xmlHttpreq.statusText);
+      }
+    });
+  });
+
+  //회원가입 버튼 클릭시
+  joinBtn.addEventListener('click', e=>{
+
+    //아이디 중복체크 미이행시
+    if(!validChkStatus.email){
+      alert('아이디 중복체크 바랍니다');
+      $email.focus();
+      $email.select();
+      return;
+    }
+
+    addForm.submit();
+  });
+
+</script>
+</body>
+
+
+</html>
