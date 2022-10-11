@@ -624,7 +624,7 @@ public class PostDAOImpl implements PostDAO{
     sql.append("    post_id, pcategory, title, udate ");
     sql.append("    from post ");
     sql.append("    where pcategory = 'B0103') t1 ");
-    sql.append(" where t1.no < 5 ");
+    sql.append(" where t1.no < 6 ");
 
     List<Post> pList = jt.query(sql.toString(), new BeanPropertyRowMapper<>(Post.class));
     return pList;
@@ -639,7 +639,7 @@ public class PostDAOImpl implements PostDAO{
     sql.append("       post_id, pcategory, title, udate ");
     sql.append("        from post ");
     sql.append("       where pcategory = 'B0102') t1 ");
-    sql.append("where t1.no < 5 ");
+    sql.append("where t1.no < 6 ");
 //    sql.append("select post_id, pcategory, title, udate ");
 //    sql.append("from post ");
 //    sql.append("where post_id in ( ");
