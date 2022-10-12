@@ -137,7 +137,6 @@ public class HomeController {
                       HttpServletRequest request,
                       @RequestParam(value = "requestURI",required = false,defaultValue = "/") String requestURI){
 
-    log.info("리퀘스트2 = {}", beforeLoginUrl);
     //기본 검증
     if (bindingResult.hasErrors()) {
       //log.info("bindingResult={}",bindingResult);
@@ -172,6 +171,10 @@ public class HomeController {
 
         if(beforeLoginUrl.contains("members/sign_in")){
           // 회원가입하고 로그인창일때는 바로 홈화면으로 가도록
+          return "redirect:/";
+        }
+        else if(beforeLoginUrl.contains("members/login")){
+          // 로그인창일때는 바로 홈화면으로 가도록
           return "redirect:/";
         }
 
@@ -230,11 +233,9 @@ public class HomeController {
   public String logout(HttpServletRequest request){
 
     beforeLoginUrl = request.getHeader("referer");
-    log.info("origin 리퀘스트 = {}", beforeLoginUrl);
-
     int idx = beforeLoginUrl.indexOf("8"); // 9080/ 에서 8을 확인
     beforeLoginUrl = beforeLoginUrl.substring(idx+3);
-    log.info("리퀘스트 = {}", beforeLoginUrl);
+//    log.info("리퀘스트 = {}", beforeLoginUrl);
 
     if(beforeLoginUrl.length() > 1){
 //        log.info("before ={}",beforeLoginUrl);
